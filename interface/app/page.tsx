@@ -7,6 +7,8 @@ import HomeImage from "../public/HomeImage.jpeg";
 import { useModal } from "../components/Context/ModalContextProvider";
 import { useLogin } from "../components/Context/LoginContextProvider";
 import Qr from "../components/Modals/Content/Qr";
+import SideBar from "../components/Layout/SideBar/SideBar";
+import Home from "../components/Sections/Home/Home";
 
 const HomePage: React.FC = () => {
   const [nfcData, setNfcData] = useState(undefined);
@@ -68,7 +70,9 @@ const HomePage: React.FC = () => {
   return (
     <div className="flex flex-row w-screen h-screen text-white bg-main">
       {dataLoaded ? (
-        <div className="text-white bg-main w-screen h-screen ">pepe</div>
+        <div className="text-white bg-main w-screen h-screen ">
+          <SideBar page={<Home />} />
+        </div>
       ) : (
         <>
           <div
