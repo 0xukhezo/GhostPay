@@ -89,7 +89,7 @@ export default function SideBar({ page }: SideBarProps) {
                           src={UpperCoin.src}
                           alt="Your Company"
                         /> */}
-                      pepe
+                      GhostPay
                     </Link>
                   </div>
                   <div className="absolute right-0 top-0 flex w-16 justify-center pt-5">

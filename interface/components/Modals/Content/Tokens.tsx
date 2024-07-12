@@ -1,16 +1,15 @@
 "use client";
 // React
 import React, { useEffect, useState } from "react";
-// Components
-import TokenCard from "@/components/Cards/TokenCard";
 // Types
-import { TokenInfo } from "@/config/types";
+import { TokenInfo } from "../../../config/types";
 // Components
-import SearchBar from "@/components/Inputs/SearchBar";
+import TokenCard from "../../Cards/TokenCard";
+import SearchBar from "../../Inputs/SearchBar";
 // Constants
 import { generalTokens } from "../../../constants/constants";
 // Context
-import { useModal } from "@/components/Context/ModalContextProvider";
+import { useModal } from "../../Context/ModalContextProvider";
 
 type TokensProps = {
   getToken: (token: TokenInfo) => void;

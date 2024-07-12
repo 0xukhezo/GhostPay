@@ -1,0 +1,1 @@
+const PAYMASTER_QUERY = "";
