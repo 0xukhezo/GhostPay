@@ -18,6 +18,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Navbar from "./Navbar";
 import { useGeneral } from "../../Context/GeneralContextProvider";
+import { useLogin } from "../../Context/LoginContextProvider";
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
@@ -43,6 +44,8 @@ export default function SideBar({ page }: SideBarProps) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   const { favoritesPaymasters } = useGeneral();
+  const { smartAccount } = useLogin();
+
   const pathname = usePathname();
 
   const wallet = "0x";
@@ -204,29 +207,31 @@ export default function SideBar({ page }: SideBarProps) {
                       </Link>
                     </li>
                   ))}{" "}
-                  <li>
-                    <Link
-                      href={`/profile/${wallet}`}
-                      className={classNames(
-                        pathname.slice(1, pathname.length).includes("profile")
-                          ? "text-greenMatrix"
-                          : "text-gray-600 hover:text-green-700",
-                        "group flex gap-x-3 rounded-md px-2 py-5 text-sm leading-6 font-semibold "
-                      )}
-                    >
-                      <Image
-                        width={24}
-                        height={24}
-                        alt="Profile Image"
-                        src={`data:image/png;base64,${new Identicon(
-                          "0xF70c1cEa8909563619547128A92dd7CC965F9657",
-                          64
-                        ).toString()}`}
-                        className="rounded-full"
-                      />
-                      Profile
-                    </Link>
-                  </li>
+                  {smartAccount && (
+                    <li>
+                      <Link
+                        href={`/profile/${wallet}`}
+                        className={classNames(
+                          pathname.slice(1, pathname.length).includes("profile")
+                            ? "text-greenMatrix"
+                            : "text-gray-600 hover:text-green-700",
+                          "group flex gap-x-3 rounded-md px-2 py-5 text-sm leading-6 font-semibold "
+                        )}
+                      >
+                        <Image
+                          width={24}
+                          height={24}
+                          alt="Profile Image"
+                          src={`data:image/png;base64,${new Identicon(
+                            smartAccount,
+                            64
+                          ).toString()}`}
+                          className="rounded-full"
+                        />
+                        Profile
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </li>
             </ul>

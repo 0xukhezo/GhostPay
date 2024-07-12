@@ -11,8 +11,7 @@ import SideBar from "../components/Layout/SideBar/SideBar";
 import Home from "../components/Sections/Home/Home";
 
 const HomePage: React.FC = () => {
-  const [nfcData, setNfcData] = useState(undefined);
-  const { login, logout, loggedIn, smartAccount } = useLogin();
+  const { login, loggedIn } = useLogin();
   const { setIsModalOpen, setContent, setTitle } = useModal();
   const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const [transition, setTransition] = useState<boolean>(false);
@@ -39,37 +38,29 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
-    const nfcLogin = localStorage.getItem("NfcData");
-
-    if (localStorage && nfcLogin) {
-      setDataLoaded(true);
-    } else {
-      const interval = setInterval(async () => {
-        try {
-          const response = await fetch("/api/nfc");
-          if (response.ok) {
-            const data = await response.json();
-            localStorage.setItem("NfcData", data.jwtGenerated);
-            setNfcData(data.jwtGenerated);
-            clearInterval(interval);
-            setIsModalOpen(false);
-            login(data?.jwtGenerated);
-          }
-        } catch (error) {
-          console.error("Error fetching NFC data:", error);
+    const interval = setInterval(async () => {
+      try {
+        const response = await fetch("/api/nfc");
+        if (response.ok) {
+          const data = await response.json();
+          clearInterval(interval);
+          setIsModalOpen(false);
+          login(data?.jwtGenerated);
         }
-      }, 2000);
-      return () => clearInterval(interval);
-    }
+      } catch (error) {
+        console.error("Error fetching NFC data:", error);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    loggedIn && dataLoaded && setChangeWidth();
+    loggedIn && setChangeWidth();
   }, [loggedIn, dataLoaded]);
 
   return (
     <div className="flex flex-row w-screen h-screen text-white bg-main">
-      {loggedIn ? (
+      {!loggedIn ? (
         <div className="text-white bg-main w-screen h-screen ">
           <SideBar page={<Home />} />
         </div>
