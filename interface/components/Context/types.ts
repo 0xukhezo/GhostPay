@@ -36,4 +36,6 @@ export type LoginContextType = {
   logout: () => Promise<void>;
   loggedIn: boolean;
   smartAccount: any;
+  safePack: any;
+  web3AuthAddress: any;
 };

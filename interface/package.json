@@ -21,13 +21,14 @@
     "@web3auth/no-modal": "^8.7.0",
     "@web3auth/openlogin-adapter": "^8.7.0",
     "asn1.js": "^5.4.1",
+    "ethers": "5",
+    "identicon.js": "^2.3.3",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.2.4",
     "qrcode.react": "^3.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "web3": "^4.10.0",
-    "identicon.js": "^2.3.3"
+    "web3": "^4.10.0"
   },
   "devDependencies": {
     "@types/node": "^20",

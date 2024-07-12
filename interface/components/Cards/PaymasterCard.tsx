@@ -11,6 +11,7 @@ import GeneralButton from "../Buttons/GeneralButton";
 import { TokenInfo } from "../../config/types";
 // Constants
 import { generalTokens } from "../../constants/constants";
+import { abbreviateEthereumAddress } from "../../utils/utils";
 
 type PaymasterCardProps = {
   paymaster: any;
@@ -77,7 +78,7 @@ function PaymasterCard({
         href={`/profile/${paymaster.owner}`}
         className="flex justify-center hover:text-greenMatrix col-span-2"
       >
-        {paymaster.owner}
+        {abbreviateEthereumAddress(paymaster.owner)}
       </Link>
       <GeneralButton
         onClick={() => {

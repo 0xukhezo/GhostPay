@@ -15,9 +15,10 @@ const clientId =
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0x1", // Please use 0x1 for Mainnet
-  rpcTarget: "https://rpc.ankr.com/eth",
-  displayName: "Ethereum Mainnet",
+  chainId: "0x66eee",
+  rpcTarget:
+    "https://arb-sepolia.g.alchemy.com/v2/NzY910Zxytaw0YxgmwYG6CzhYWM6YkyZ",
+  displayName: "Arbitrum Sepolia",
   blockExplorerUrl: "https://etherscan.io/",
   ticker: "ETH",
   tickerName: "Ethereum",
@@ -65,8 +66,8 @@ export function LoginContextProvider({ children }: any) {
         setProvider(web3auth.provider);
 
         if (web3auth.connected) {
-          setLoggedIn(true);
           await createSafe4337Pack();
+          setLoggedIn(true);
         }
       } catch (error) {
         console.error(error);
@@ -84,6 +85,7 @@ export function LoginContextProvider({ children }: any) {
     const addresses = await web3.eth.getAccounts();
 
     if (addresses && addresses.length > 0) {
+      setWeb3AuthAddress(addresses[0]);
       return addresses[0];
     }
   };
@@ -100,14 +102,16 @@ export function LoginContextProvider({ children }: any) {
 
   const createSafe4337Pack = async () => {
     const safe4337Pack = await Safe4337Pack.init({
-      provider: "https://rpc.ankr.com/eth",
+      provider:
+        "https://arb-sepolia.g.alchemy.com/v2/NzY910Zxytaw0YxgmwYG6CzhYWM6YkyZ",
       signer: await getPrivateKey(),
-      bundlerUrl: `https://api.pimlico.io/v1/sepolia/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
+      bundlerUrl: `https://api.pimlico.io/v2/421614/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
       options: {
         owners: [await getAccounts()],
         threshold: 1,
       },
     });
+
     setSmartAccount(await safe4337Pack.protocolKit.getAddress());
     setSafePack(safe4337Pack);
   };
@@ -145,6 +149,8 @@ export function LoginContextProvider({ children }: any) {
     logout,
     loggedIn,
     smartAccount,
+    safePack,
+    web3AuthAddress,
   };
 
   return (
