@@ -2,3 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+.cardStakingHover:hover {
+  box-shadow: 0 0 40px #4aba4c;
+}
+
+.login {
+  width: 50%;
+  opacity: 1
+}
+
+.loginClose {
+  width: 0%;
+  opacity: 0;
+  transition: all 1.2s ease-out 0.2s;
+}
+
+.loginExpand {
+  width: 100%;
+  opacity: 0;
+  transition: width 1.2s ease-out 0.2s,
+    opacity 1.2s linear 1.2s;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
