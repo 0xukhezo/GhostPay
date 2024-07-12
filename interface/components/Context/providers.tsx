@@ -5,12 +5,15 @@ import React from "react";
 import { ProviderProps } from "./types";
 // Components
 import { LoginContextProvider } from "./LoginContextProvider";
+import { GeneralContextProvider } from "./GeneralContextProvider";
 import { ModalContextProvider } from "./ModalContextProvider";
 
 export default function Providers({ children }: ProviderProps) {
   return (
     <LoginContextProvider>
-      <ModalContextProvider>{children}</ModalContextProvider>
+      <GeneralContextProvider>
+        <ModalContextProvider>{children}</ModalContextProvider>
+      </GeneralContextProvider>
     </LoginContextProvider>
   );
 }

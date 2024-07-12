@@ -17,6 +17,8 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Navbar from "./Navbar";
+import { useGeneral } from "../../Context/GeneralContextProvider";
+import { useLogin } from "../../Context/LoginContextProvider";
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
@@ -41,9 +43,10 @@ interface SideBarProps {
 export default function SideBar({ page }: SideBarProps) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
+  const { favoritesPaymasters } = useGeneral();
+  const { smartAccount } = useLogin();
   const pathname = usePathname();
 
-  const wallet = "0x";
   return (
     <div className="text-white bg-main">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -204,7 +207,7 @@ export default function SideBar({ page }: SideBarProps) {
                   ))}{" "}
                   <li>
                     <Link
-                      href={`/profile/${wallet}`}
+                      href={`/profile/${smartAccount}`}
                       className={classNames(
                         pathname.slice(1, pathname.length).includes("profile")
                           ? "text-greenMatrix"
@@ -217,7 +220,7 @@ export default function SideBar({ page }: SideBarProps) {
                         height={24}
                         alt="Profile Image"
                         src={`data:image/png;base64,${new Identicon(
-                          "0xF70c1cEa8909563619547128A92dd7CC965F9657",
+                          smartAccount,
                           64
                         ).toString()}`}
                         className="rounded-full"
@@ -228,7 +231,40 @@ export default function SideBar({ page }: SideBarProps) {
                 </ul>
               </li>
             </ul>
-          </nav>{" "}
+          </nav>
+          <div className="min-h-[300px]">
+            <h2 className="pb-4 border-b-1 border-greenMatrix px-6 font-semibold w-full text-2xl">
+              Favorite Paymasters
+            </h2>
+            <div className="px-6 mt-4">
+              {favoritesPaymasters.length > 0 ? (
+                <div className="font-semibold text-lg text-greenMatrix">
+                  {favoritesPaymasters.slice(0, 3).map((paymaster: any) => {
+                    return <div className="pt-4 pb-6">{paymaster.title}</div>;
+                  })}
+                  {favoritesPaymasters.length >= 3 && (
+                    <Link
+                      href="/paymasters"
+                      className="underline underline-offset-4 text-sm"
+                    >
+                      See more
+                    </Link>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center font-semibold text-lg">
+                  <span>Add paymasters to your favorites</span>
+                  <br></br>
+                  <Link
+                    href="/paymasters"
+                    className="text-greenMatrix font-bold text-xl underline underline-offset-4"
+                  >
+                    Go!
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
