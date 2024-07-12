@@ -38,6 +38,9 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
+    if (loggedIn) {
+      setDataLoaded(true);
+    }
     const interval = setInterval(async () => {
       try {
         const response = await fetch("/api/nfc");
@@ -56,11 +59,11 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     loggedIn && setChangeWidth();
-  }, [loggedIn, dataLoaded]);
+  }, [loggedIn]);
 
   return (
     <div className="flex flex-row w-screen h-screen text-white bg-main">
-      {!loggedIn ? (
+      {loggedIn && dataLoaded ? (
         <div className="text-white bg-main w-screen h-screen ">
           <SideBar page={<Home />} />
         </div>

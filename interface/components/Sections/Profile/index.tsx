@@ -12,7 +12,7 @@ import PaymasterCard from "../../Cards/PaymasterCard";
 
 function ProfileSection() {
   const pathname = usePathname();
-
+  console.log(pathname);
   const ownedPaymasters: any[] = [];
   return (
     <main>
@@ -22,13 +22,16 @@ function ProfileSection() {
           height={64}
           alt="Profile Image"
           src={`data:image/png;base64,${new Identicon(
-            pathname.split("/")[2],
+            pathname.split("/")[2] ||
+              "0x1eB3BE5e1Bb85D1090ABD92005aD87590687F2AC",
             64
           ).toString()}`}
           className="rounded-full"
         />
         <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl ml-6">
-          {pathname.split("/")[2]} Profile
+          {pathname.split("/")[2] ||
+            "0x1eb3be5e1bb85d1090abd92005ad87590687f2ac"}
+          Profile
         </h2>
       </div>{" "}
       <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl mt-10 border-b-1 border-greenMatrix w-full">

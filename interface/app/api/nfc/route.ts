@@ -10,7 +10,6 @@ const kid = crypto.createHash("sha256").update(publicKey).digest("hex");
 let jwtGenerated: any;
 
 export async function POST(request: Request) {
-  console.log("RECEIVED POST");
   const body = await request.json();
 
   jwtGenerated = jwt.sign(

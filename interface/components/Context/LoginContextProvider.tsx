@@ -65,7 +65,6 @@ export function LoginContextProvider({ children }: any) {
         setProvider(web3auth.provider);
 
         if (web3auth.connected) {
-          console.log("is connected!!!");
           setLoggedIn(true);
           await createSafe4337Pack();
         }

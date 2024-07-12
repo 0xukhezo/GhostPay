@@ -50,7 +50,6 @@ export default function SideBar({ page }: SideBarProps) {
 
   const pathname = usePathname();
 
-  const wallet = "0x";
   return (
     <div className="text-white bg-main">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -209,7 +208,7 @@ export default function SideBar({ page }: SideBarProps) {
                   {smartAccount && (
                     <li>
                       <Link
-                        href={`/profile/${wallet}`}
+                        href={`/profile/${smartAccount}`}
                         className={classNames(
                           pathname.slice(1, pathname.length).includes("profile")
                             ? "text-greenMatrix"
