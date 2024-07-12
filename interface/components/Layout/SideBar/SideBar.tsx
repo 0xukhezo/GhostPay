@@ -20,6 +20,8 @@ import Navbar from "./Navbar";
 import { useGeneral } from "../../Context/GeneralContextProvider";
 import { useLogin } from "../../Context/LoginContextProvider";
 
+import Logo from "../../../public/logo.svg";
+
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
   {
@@ -83,13 +85,12 @@ export default function SideBar({ page }: SideBarProps) {
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-4">
                   <div className="flex h-16 shrink-0 items-center">
                     <Link href="/">
-                      {/* <Image
-                          height={32}
-                          width={32}
-                          src={UpperCoin.src}
-                          alt="Your Company"
-                        /> */}
-                      GhostPay
+                      <Image
+                        height={32}
+                        width={32}
+                        src={Logo.src}
+                        alt="Your Company"
+                      />
                     </Link>
                   </div>
                   <div className="absolute right-0 top-0 flex w-16 justify-center pt-5">
@@ -154,17 +155,15 @@ export default function SideBar({ page }: SideBarProps) {
 
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-10 lg:flex lg:w-72 lg:flex-col border-r-1 border-greenMatrix">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto  pb-4">
-          <div className="flex h-16 shrink-0 items-center mt-6 px-6">
+          <div className="flex shrink-0 items-center mt-4 px-6 h-fit">
             <Link href="/">
-              {/*
-                <Image
-                  height={32}
-                  width={32}
-                  src={UpperCoin.src}
-                  alt="Your Company"
-                />
-                */}
-              Silent
+              <Image
+                height={128}
+                width={128}
+                src={Logo.src}
+                alt="Your Company"
+                className="h-16"
+              />
             </Link>
           </div>
           <nav className="flex flex-1 flex-col px-6">
