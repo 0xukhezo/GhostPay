@@ -93,7 +93,7 @@ const HomePage: React.FC = () => {
               ) : (
                 <>
                   <div className="my-[24px] max-w-[397px] text-center mx-auto text-xl">
-                    Enter in Silence ecosystem
+                    Enter in GhostPay ecosystem
                   </div>
                 </>
               )}

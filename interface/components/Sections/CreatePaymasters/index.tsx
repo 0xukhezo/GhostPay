@@ -274,7 +274,7 @@ function CreatePaymasters() {
             type="text"
             value={paymasterTitle}
             onChange={(e) => setPaymasterTitle(e.target.value)}
-            placeholder="Silence Paymaster"
+            placeholder="GhostPay Paymaster"
             className="rounded-xl px-4 w-full bg-gray-300 text-main pr-8 py-1 font-light h-[46px] ring-0 focus:ring-0 outline-0 w-[20rem]"
           />
           <GeneralButton
