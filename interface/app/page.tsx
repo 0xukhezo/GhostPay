@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
   const [transition, setTransition] = useState<boolean>(false);
 
   const generateQrCode = () => {
-    const url = `https://10.251.95.190:3000/nfc-reader`;
+    const url = `https://172.20.10.2:3000/nfc-reader`;
     setIsModalOpen(true);
     setContent(<Qr qrUrl={url} />);
     setTitle(`Scan this QR`);
@@ -58,18 +58,18 @@ const HomePage: React.FC = () => {
         } catch (error) {
           console.error("Error fetching NFC data:", error);
         }
-      }, 5000);
+      }, 2000);
       return () => clearInterval(interval);
     }
   }, []);
 
   useEffect(() => {
-    smartAccount && nfcData && setChangeWidth();
-  }, [nfcData, smartAccount]);
+    loggedIn && dataLoaded && setChangeWidth();
+  }, [loggedIn, dataLoaded]);
 
   return (
     <div className="flex flex-row w-screen h-screen text-white bg-main">
-      {dataLoaded ? (
+      {loggedIn ? (
         <div className="text-white bg-main w-screen h-screen ">
           <SideBar page={<Home />} />
         </div>
