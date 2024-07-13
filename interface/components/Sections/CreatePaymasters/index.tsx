@@ -98,7 +98,10 @@ function CreatePaymasters() {
     const provider1 = new ethers.providers.JsonRpcProvider(
       "https://docs.safe.global/home/4337-supported-networks"
     );
-
+    showNotification({
+      message: "Sending Transaction",
+      type: "info",
+    });
     const erc20Abi = [
       { inputs: [], stateMutability: "nonpayable", type: "constructor" },
       {

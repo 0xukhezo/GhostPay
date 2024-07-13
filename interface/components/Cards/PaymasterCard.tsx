@@ -54,6 +54,7 @@ function PaymasterCard({
   const createDepositTx = async (amountToFunds: string) => {
     const entrypointInterface = new ethers.utils.Interface(abiEntryPoint);
     const paymasterInterface = new ethers.utils.Interface(abiPaymaster);
+
     showNotification({
       message: "Sending Transaction",
       type: "info",
