@@ -45,37 +45,40 @@ function ProfileSection() {
           Profile
         </h2>
       </div>{" "}
-      {smartAccount.toLowerCase() === pathname.split("/")[2].toLowerCase() && (
-        <>
-          <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl mt-10 border-b-1 border-greenMatrix w-full">
-            Your Paymasters
-          </h2>
-          {ownedPaymasters.length !== 0 ? (
-            <div className="mt-4">
-              {ownedPaymasters.map((paymaster: any, index: number) => {
-                return (
-                  <PaymasterCard
-                    key={`${paymaster.title}-${index}`}
-                    index={index}
-                    paymaster={paymaster}
-                    profile={true}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <p className="flex flex-col items-center text-lg mt-10">
-              <span className="mb-4">You don't have any paymaster created</span>
-              <Link
-                href="/paymasters/create"
-                className="underline underline-offset-4 text-greenMatrix font-semibold"
-              >
-                Create one
-              </Link>
-            </p>
-          )}
-        </>
-      )}
+      {smartAccount &&
+        smartAccount.toLowerCase() === pathname.split("/")[2].toLowerCase() && (
+          <>
+            <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl mt-10 border-b-1 border-greenMatrix w-full">
+              Your Paymasters
+            </h2>
+            {ownedPaymasters.length !== 0 ? (
+              <div className="mt-4">
+                {ownedPaymasters.map((paymaster: any, index: number) => {
+                  return (
+                    <PaymasterCard
+                      key={`${paymaster.title}-${index}`}
+                      index={index}
+                      paymaster={paymaster}
+                      profile={true}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="flex flex-col items-center text-lg mt-10">
+                <span className="mb-4">
+                  You don't have any paymaster created
+                </span>
+                <Link
+                  href="/paymasters/create"
+                  className="underline underline-offset-4 text-greenMatrix font-semibold"
+                >
+                  Create one
+                </Link>
+              </p>
+            )}
+          </>
+        )}
     </main>
   );
 }

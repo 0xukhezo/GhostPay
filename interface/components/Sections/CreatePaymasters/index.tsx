@@ -63,7 +63,7 @@ function CreatePaymasters() {
         ethOracle,
         smartAccount,
         900000,
-        1000000 + fee * 10000,
+        fee * 10000,
       ]),
       value: BigNumber.from(0).toString(),
     };
@@ -135,6 +135,7 @@ function CreatePaymasters() {
         userOperationReceipt = await safePack.getUserOperationReceipt(
           userOperationHash
         );
+        console.log(userOperationReceipt);
         showNotification({
           message: "Approve transaction success",
           type: "success",

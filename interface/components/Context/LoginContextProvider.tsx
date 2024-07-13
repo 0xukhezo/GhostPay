@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { CHAIN_NAMESPACES, IProvider, WALLET_ADAPTERS } from "@web3auth/base";
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
@@ -61,13 +61,8 @@ export function LoginContextProvider({ children }: any) {
     null
   );
 
-  const initializedRef = useRef(false);
-
   useEffect(() => {
     const init = async () => {
-      if (initializedRef.current) return;
-      initializedRef.current = true;
-
       try {
         await web3auth.init();
         setProvider(web3auth.provider);
@@ -169,17 +164,19 @@ export function LoginContextProvider({ children }: any) {
   const login = async (jwt: string) => {
     if (!web3auth.connected) {
     }
-    const web3authProvider = await web3auth.connectTo(
-      WALLET_ADAPTERS.OPENLOGIN,
-      {
-        loginProvider: "jwt",
-        extraLoginOptions: {
-          id_token: jwt,
-          verifierIdField: "sub",
-        },
-      }
-    );
-    setProvider(web3authProvider);
+    if (!loggedIn) {
+      const web3authProvider = await web3auth.connectTo(
+        WALLET_ADAPTERS.OPENLOGIN,
+        {
+          loginProvider: "jwt",
+          extraLoginOptions: {
+            id_token: jwt,
+            verifierIdField: "sub",
+          },
+        }
+      );
+      setProvider(web3authProvider);
+    }
     if (web3auth.connected) {
       setLoggedIn(true);
       getAccounts();

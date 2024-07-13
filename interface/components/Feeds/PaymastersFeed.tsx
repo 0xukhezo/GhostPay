@@ -12,7 +12,7 @@ function PaymastersFeed() {
 
   return (
     <main className="p-10">
-      <div className="grid grid-cols-11 pb-1 border-b-1 border-greenMatrix px-10">
+      <div className="grid grid-cols-10 pb-1 border-b-1 border-greenMatrix px-10">
         <span></span>
         <span className="text-base md:text-xl flex justify-center col-span-2">
           Name
@@ -43,7 +43,9 @@ function PaymastersFeed() {
               );
             })
           ) : (
-            <div>There are not paymasters</div>
+            <div className="flex flex-col items-center text-lg mt-10">
+              <span className="mb-4">There are not paymasters</span>
+            </div>
           )
         ) : (
           <Spinner />

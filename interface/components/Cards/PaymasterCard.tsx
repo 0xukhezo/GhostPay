@@ -143,7 +143,7 @@ function PaymasterCard({
         {Number(paymaster.price) - 1000000 === 0 ? (
           <span>No commision</span>
         ) : (
-          <span>{(Number(paymaster.price) - 1000000) / 10 ** 4} %</span>
+          <span>{Number(paymaster.price) / 10 ** 4 - 100} %</span>
         )}
       </span>
       <Link
