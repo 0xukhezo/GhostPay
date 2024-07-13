@@ -29,7 +29,7 @@ const privateKeyProvider = new EthereumPrivateKeyProvider({
 });
 
 const web3auth = new Web3AuthNoModal({
-  clientId, // Web3Auth Client ID
+  clientId,
   web3AuthNetwork: "sapphire_devnet",
   privateKeyProvider,
   useCoreKitKey: false,
@@ -37,12 +37,12 @@ const web3auth = new Web3AuthNoModal({
 
 const openloginAdapter = new OpenloginAdapter({
   adapterSettings: {
-    uxMode: "redirect", // redirect or popup
+    uxMode: "redirect",
     loginConfig: {
       jwt: {
-        verifier: "bruselas-test", // name of the verifier created on Web3Auth Dashboard
+        verifier: "bruselas-test",
         typeOfLogin: "jwt",
-        clientId: clientId, // Web3Auth Client ID
+        clientId: clientId,
       },
     },
   },

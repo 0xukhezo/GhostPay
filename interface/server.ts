@@ -21,7 +21,7 @@ const httpsOptions = {
 };
 
 // IP y Puerto para escuchar conexiones
-const hostname = "172.20.10.2"; // IP de tu PC en la red local
+const hostname = "172.20.10.4"; // IP de tu PC en la red local
 const port = 3000;
 
 app.prepare().then(() => {
