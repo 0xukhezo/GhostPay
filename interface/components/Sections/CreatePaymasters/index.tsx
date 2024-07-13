@@ -14,7 +14,7 @@ import Tokens from "../../Modals/Content/Tokens";
 import Steps from "../../Steps/Steps";
 import { useLogin } from "../../Context/LoginContextProvider";
 import { BigNumber, ethers } from "ethers";
-import { abiERC20, abiGhostPayFactory, abiPaymaster } from "../../../abis";
+import { abiGhostPayFactory } from "../../../abis";
 import { useNotification } from "../../Context/NotificationContextProvider";
 
 function CreatePaymasters() {
@@ -90,63 +90,6 @@ function CreatePaymasters() {
           type: "success",
         });
       }
-    }
-  };
-
-  const approveTx = async () => {
-    try {
-      const provider1 = new ethers.providers.JsonRpcProvider(
-        "https://docs.safe.global/home/4337-supported-networks"
-      );
-      showNotification({
-        message: "Sending Transaction",
-        type: "info",
-      });
-
-      const erc20Test = new ethers.Contract(
-        "0x25466530DE4e382EcBc0834ADFA3CaF158A451dA",
-        abiERC20,
-        provider1
-      );
-
-      const transaction1 = {
-        to: "0x25466530DE4e382EcBc0834ADFA3CaF158A451dA",
-        data: erc20Test.interface.encodeFunctionData("approve", [
-          paymasterSelected,
-          20000000,
-        ]),
-        value: BigNumber.from(0).toString(),
-      };
-
-      const transactions = [transaction1];
-
-      const safeOperation = await safePack.createTransaction({ transactions });
-      const signedSafeOperation = await safePack.signSafeOperation(
-        safeOperation
-      );
-      const userOperationHash = await safePack.executeTransaction({
-        executable: signedSafeOperation,
-      });
-      let userOperationReceipt = null;
-
-      while (!userOperationReceipt) {
-        // Wait 2 seconds before checking the status again
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        userOperationReceipt = await safePack.getUserOperationReceipt(
-          userOperationHash
-        );
-        console.log(userOperationReceipt);
-        showNotification({
-          message: "Approve transaction success",
-          type: "success",
-        });
-      }
-    } catch (err: any) {
-      console.log(err);
-      showNotification({
-        message: "Approve transaction error",
-        type: "error",
-      });
     }
   };
 
@@ -258,15 +201,6 @@ function CreatePaymasters() {
           />{" "}
         </div>
       </div>
-      <GeneralButton
-        onClick={() => {
-          approveTx();
-        }}
-        disabled={false}
-        className={`px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold`}
-      >
-        approve
-      </GeneralButton>
       <GeneralButton
         onClick={async () => {
           if (paymasterSelected) {

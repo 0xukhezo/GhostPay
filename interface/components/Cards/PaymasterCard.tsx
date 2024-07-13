@@ -13,9 +13,9 @@ import { TokenInfo } from "../../config/types";
 import { generalTokens } from "../../constants/constants";
 import { abbreviateEthereumAddress } from "../../utils/utils";
 import { useLogin } from "../Context/LoginContextProvider";
-import { ethers } from "ethers";
-import { abiEntryPoint, abiPaymaster } from "../../abis";
 import { useNotification } from "../Context/NotificationContextProvider";
+import { useModal } from "../Context/ModalContextProvider";
+import Deposit from "../Modals/Content/Deposit";
 
 type PaymasterCardProps = {
   paymaster: any;
@@ -32,6 +32,7 @@ function PaymasterCard({
   const { favoritesPaymasters, setFavoritesPaymasters } = useGeneral();
   const { changePaymaster, safePack, smartAccount } = useLogin();
   const { showNotification } = useNotification();
+  const { setIsModalOpen, setContent, setTitle } = useModal();
 
   const token = generalTokens.filter(
     (token: TokenInfo) =>
@@ -48,64 +49,6 @@ function PaymasterCard({
       setFavoritesPaymasters(updatedFavorites);
     } else {
       setFavoritesPaymasters([...favoritesPaymasters, paymaster]);
-    }
-  };
-
-  const createDepositTx = async (amountToFunds: string) => {
-    const entrypointInterface = new ethers.utils.Interface(abiEntryPoint);
-    const paymasterInterface = new ethers.utils.Interface(abiPaymaster);
-
-    showNotification({
-      message: "Sending Transaction",
-      type: "info",
-    });
-
-    try {
-      const transaction1 = {
-        to: process.env.NEXT_PUBLIC_ENTRYPOINT,
-        data: entrypointInterface.encodeFunctionData("depositTo", [
-          paymaster.id,
-        ]),
-        value: amountToFunds,
-      };
-
-      // const transaction2 = {
-      //   to: paymaster.id,
-      //   data: paymasterInterface.encodeFunctionData("addStake", [1]),
-      //   value: amountToFunds,
-      // };
-
-      const transactions = [transaction1];
-
-      const safeOperation = await safePack.createTransaction({ transactions });
-      const signedSafeOperation = await safePack.signSafeOperation(
-        safeOperation
-      );
-      const userOperationHash = await safePack.executeTransaction({
-        executable: signedSafeOperation,
-      });
-
-      let userOperationReceipt = null;
-
-      while (!userOperationReceipt) {
-        // Wait 2 seconds before checking the status again
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        userOperationReceipt = await safePack.getUserOperationReceipt(
-          userOperationHash
-        );
-
-        if (userOperationReceipt) {
-          showNotification({
-            message: "Transaction success",
-            type: "success",
-          });
-        }
-      }
-    } catch (error: any) {
-      showNotification({
-        message: "Transaction error",
-        type: "error",
-      });
     }
   };
 
@@ -175,11 +118,14 @@ function PaymasterCard({
         profile && (
           <GeneralButton
             onClick={() => {
-              createDepositTx(ethers.utils.parseEther("0.0001").toString());
+              setIsModalOpen(true);
+              setContent(<Deposit paymaster={paymaster} />);
+              setTitle(`Deposit tokens in Paymaster`);
+              // createDepositTx(ethers.utils.parseEther("0.0001").toString());
             }}
             className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
           >
-            Deposit 0.001 ETH
+            Deposit ETH
           </GeneralButton>
         )}
     </main>
