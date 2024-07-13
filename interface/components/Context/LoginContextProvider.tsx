@@ -15,11 +15,10 @@ const clientId =
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0x66eee",
-  rpcTarget:
-    "https://arb-sepolia.g.alchemy.com/v2/NzY910Zxytaw0YxgmwYG6CzhYWM6YkyZ",
-  displayName: "Arbitrum Sepolia",
-  blockExplorerUrl: "https://etherscan.io/",
+  chainId: "0x14a34", // Please use 0x1 for Mainnet
+  rpcTarget: "https://rpc.ankr.com/base_sepolia",
+  displayName: "Base Sepolia",
+  blockExplorerUrl: "https://sepolia.basescan.org/",
   ticker: "ETH",
   tickerName: "Ethereum",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
@@ -102,10 +101,9 @@ export function LoginContextProvider({ children }: any) {
 
   const createSafe4337Pack = async () => {
     const safe4337Pack = await Safe4337Pack.init({
-      provider:
-        "https://arb-sepolia.g.alchemy.com/v2/NzY910Zxytaw0YxgmwYG6CzhYWM6YkyZ",
+      provider: "https://rpc.ankr.com/base_sepolia",
       signer: await getPrivateKey(),
-      bundlerUrl: `https://api.pimlico.io/v2/421614/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
+      bundlerUrl: `https://api.pimlico.io/v2/84532/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
       options: {
         owners: [await getAccounts()],
         threshold: 1,

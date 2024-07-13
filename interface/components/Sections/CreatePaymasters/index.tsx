@@ -19,7 +19,7 @@ function CreatePaymasters() {
   const [token, setToken] = useState<TokenInfo | null>(null);
   const [price, setPrice] = useState<number | undefined>(undefined);
   const { setIsModalOpen, setContent, setTitle } = useModal();
-  const { safePack, smartAccount, web3AuthAddress } = useLogin();
+  const { safePack, smartAccount } = useLogin();
 
   const getToken = (token: any) => {
     setToken(token);
@@ -27,7 +27,7 @@ function CreatePaymasters() {
 
   const createTx = async () => {
     const provider1 = new ethers.providers.JsonRpcProvider(
-      "https://arb-sepolia.g.alchemy.com/v2/NzY910Zxytaw0YxgmwYG6CzhYWM6YkyZ"
+      "https://docs.safe.global/home/4337-supported-networks"
     );
 
     const ghostPayFactoryAbi = [
@@ -149,7 +149,7 @@ function CreatePaymasters() {
     ];
 
     const ghostPayFactoryContract = new ethers.Contract(
-      "0xA2CE42652BA16Bf812f4e46BBA93ec3605DcceD2",
+      "0x0Af6A440acE5b6cB8c5962F1B7A4503e66129873",
       ghostPayFactoryAbi,
       provider1
     );
@@ -159,7 +159,7 @@ function CreatePaymasters() {
     const ethOracle = "0xdd6D76262Fd7BdDe428dcfCd94386EbAe0151603";
 
     const transaction1 = {
-      to: "0xA2CE42652BA16Bf812f4e46BBA93ec3605DcceD2", //factory
+      to: "0x0Af6A440acE5b6cB8c5962F1B7A4503e66129873", //factory
       data: ghostPayFactoryContract.interface.encodeFunctionData("deploy", [
         tokenERC,
         oracle,
