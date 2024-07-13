@@ -38,4 +38,5 @@ export type LoginContextType = {
   smartAccount: any;
   safePack: any;
   web3AuthAddress: any;
+  provider: any;
 };

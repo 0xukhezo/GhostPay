@@ -149,6 +149,7 @@ export function LoginContextProvider({ children }: any) {
     smartAccount,
     safePack,
     web3AuthAddress,
+    provider,
   };
 
   return (

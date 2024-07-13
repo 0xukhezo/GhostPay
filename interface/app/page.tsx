@@ -63,7 +63,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="flex flex-row w-screen h-screen text-white bg-main">
-      {loggedIn && dataLoaded ? (
+      {!loggedIn && !dataLoaded ? (
         <div className="text-white bg-main w-screen h-screen ">
           <SideBar page={<Home />} />
         </div>
