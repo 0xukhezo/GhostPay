@@ -97,6 +97,7 @@ export function LoginContextProvider({ children }: any) {
       console.log("provider not initialized yet");
       return;
     }
+
     return `0x${await web3auth.provider.request({
       method: "eth_private_key",
     })}`;
@@ -141,24 +142,18 @@ export function LoginContextProvider({ children }: any) {
       signer: await getPrivateKey(),
       bundlerUrl: `https://api.pimlico.io/v2/84532/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
       paymasterOptions: {
-        paymasterAddress: newPaymaster,
+        paymasterAddress: "0xc3E4950Abf69eE61aB2e9BA4a8AfB8429132Df8D",
         paymasterTokenAddress: "0x25466530DE4e382EcBc0834ADFA3CaF158A451dA",
       },
       customContracts: {
         entryPointAddress: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
       },
       options: {
-        owners: [await getAccounts()],
-        threshold: 1,
+        safeAddress: smartAccount as string,
       },
     });
-    console.log(
-      newPaymaster,
-      safe4337Pack,
-      await safe4337Pack.protocolKit.getAddress()
-    );
-    setPaymasterSelected(newPaymasterTitle || newPaymaster);
-    setSmartAccount(await safe4337Pack.protocolKit.getAddress());
+
+    setPaymasterSelected("0xc3E4950Abf69eE61aB2e9BA4a8AfB8429132Df8D");
     setSafePack(safe4337Pack);
   };
 

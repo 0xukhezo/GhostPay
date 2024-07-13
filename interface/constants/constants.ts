@@ -43,12 +43,12 @@ export const generalTokens = [
 
 export const integrations = [
   {
-    name: "Uniswap",
-    image: "/uniswap.png",
+    name: "Swap",
+    image: "/cara.svg",
   },
   {
-    name: "1inch",
-    image: "/1inch.jpeg",
+    name: "Uniswap",
+    image: "/uniswap.png",
   },
   {
     name: "PancakeSwap",
