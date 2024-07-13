@@ -4,6 +4,9 @@ import LINK from "../public/LINK.jpeg";
 export const factoryPaymasterContract =
   "0x4F994c4e18f1cb3088255E784E909d9b834d2CaD";
 
+export const entrypointBaseContract =
+  "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
+
 export const initialSteps = [
   {
     name: "Select Token",

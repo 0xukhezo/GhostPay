@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 // Constants
 import {
+  entrypointBaseContract,
   factoryPaymasterContract,
   generalTokens,
   initialSteps,
@@ -15,7 +16,7 @@ import Tokens from "../../Modals/Content/Tokens";
 import Steps from "../../Steps/Steps";
 import { useLogin } from "../../Context/LoginContextProvider";
 import { BigNumber, ethers } from "ethers";
-import { ghostPayFactoryAbi } from "../../../abis";
+import { abiGhostPayFactory, abiPaymaster } from "../../../abis";
 import { useNotification } from "../../Context/NotificationContextProvider";
 
 function CreatePaymasters() {
@@ -32,7 +33,7 @@ function CreatePaymasters() {
     setToken(token);
   };
 
-  const createTx = async (
+  const createPaymasterTx = async (
     token: TokenInfo | null,
     price: number | undefined
   ) => {
@@ -42,7 +43,7 @@ function CreatePaymasters() {
 
     const ghostPayFactoryContract = new ethers.Contract(
       factoryPaymasterContract,
-      ghostPayFactoryAbi,
+      abiGhostPayFactory,
       provider1
     );
 
@@ -63,6 +64,7 @@ function CreatePaymasters() {
       ]),
       value: BigNumber.from(0).toString(),
     };
+
     setLoadingTx(true);
     const transactions = [transaction1];
 
@@ -85,15 +87,14 @@ function CreatePaymasters() {
       );
       if (userOperationReceipt) {
         showNotification({
-          message: "Transaction success",
+          message: "Success! Your custom paymaster has been created",
           type: "success",
         });
-        redirect("/paymasters");
       }
     }
   };
 
-  const createApproveTx = async () => {
+  const approveTx = async () => {
     const provider1 = new ethers.providers.JsonRpcProvider(
       "https://docs.safe.global/home/4337-supported-networks"
     );
@@ -320,6 +321,10 @@ function CreatePaymasters() {
       userOperationReceipt = await safePack.getUserOperationReceipt(
         userOperationHash
       );
+      showNotification({
+        message: "Approve transaction success",
+        type: "success",
+      });
     }
   };
 
@@ -470,7 +475,16 @@ function CreatePaymasters() {
       </div>
       <GeneralButton
         onClick={() => {
-          createTx(token, price);
+          approveTx();
+        }}
+        disabled={false}
+        className={`px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold`}
+      >
+        approve
+      </GeneralButton>
+      <GeneralButton
+        onClick={() => {
+          createPaymasterTx(token, price);
         }}
         disabled={token === null || price === undefined || loadingTx}
         className={`px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold ${

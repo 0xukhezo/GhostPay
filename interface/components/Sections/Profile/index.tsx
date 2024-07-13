@@ -44,7 +44,7 @@ function ProfileSection() {
       </div>{" "}
       <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl mt-10 border-b-1 border-greenMatrix w-full">
         Your Paymasters
-      </h2>{" "}
+      </h2>
       {ownedPaymasters.length !== 0 ? (
         <div className="mt-4">
           {ownedPaymasters.map((paymaster: any, index: number) => {

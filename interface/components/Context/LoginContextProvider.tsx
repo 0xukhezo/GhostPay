@@ -60,6 +60,7 @@ export function LoginContextProvider({ children }: any) {
   const [paymasterSelected, setPaymasterSelected] = useState<string | null>(
     null
   );
+
   useEffect(() => {
     const init = async () => {
       try {
