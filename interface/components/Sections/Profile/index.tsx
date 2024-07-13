@@ -12,6 +12,7 @@ import PaymasterCard from "../../Cards/PaymasterCard";
 import { useFetchPaymaster } from "../../../hooks/usePaymasters";
 import { PaymasterInfo } from "../../../config/types";
 import { useLogin } from "../../Context/LoginContextProvider";
+import { abbreviateEthereumAddress } from "../../../utils/utils";
 
 function ProfileSection() {
   const { paymasters } = useFetchPaymaster();
@@ -19,7 +20,7 @@ function ProfileSection() {
   const pathname = usePathname();
 
   const ownedPaymasters = paymasters.filter((paymaster: PaymasterInfo) => {
-    return paymaster.owner === smartAccount;
+    return paymaster.owner.toLowerCase() === smartAccount.toLowerCase();
   });
 
   return (
@@ -37,8 +38,10 @@ function ProfileSection() {
           className="rounded-full"
         />
         <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl ml-6">
-          {pathname.split("/")[2] ||
-            "0x1eb3be5e1bb85d1090abd92005ad87590687f2ac"}
+          {abbreviateEthereumAddress(pathname.split("/")[2]) ||
+            abbreviateEthereumAddress(
+              "0x1eb3be5e1bb85d1090abd92005ad87590687f2ac"
+            )}{" "}
           Profile
         </h2>
       </div>{" "}
@@ -53,6 +56,7 @@ function ProfileSection() {
                 key={`${paymaster.title}-${index}`}
                 index={index}
                 paymaster={paymaster}
+                profile={true}
               />
             );
           })}

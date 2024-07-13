@@ -15,19 +15,23 @@ import { abbreviateEthereumAddress } from "../../utils/utils";
 import { useLogin } from "../Context/LoginContextProvider";
 import { ethers } from "ethers";
 import { abiEntryPoint, abiPaymaster } from "../../abis";
+import { useNotification } from "../Context/NotificationContextProvider";
 
 type PaymasterCardProps = {
   paymaster: any;
   index: number;
   allowFavorites?: boolean;
+  profile: boolean;
 };
 function PaymasterCard({
   paymaster,
   index,
   allowFavorites,
+  profile,
 }: PaymasterCardProps) {
   const { favoritesPaymasters, setFavoritesPaymasters } = useGeneral();
-  const { changePaymaster, safePack } = useLogin();
+  const { changePaymaster, safePack, smartAccount } = useLogin();
+  const { showNotification } = useNotification();
 
   const token = generalTokens.filter(
     (token: TokenInfo) =>
@@ -47,35 +51,33 @@ function PaymasterCard({
     }
   };
 
-
   const createDepositTx = async (amountToFunds: string) => {
-    const provider1 = new ethers.providers.JsonRpcProvider(
-      "https://docs.safe.global/home/4337-supported-networks"
-    );
-
     const entrypointInterface = new ethers.utils.Interface(abiEntryPoint);
     const paymasterInterface = new ethers.utils.Interface(abiPaymaster);
-
+    showNotification({
+      message: "Sending Transaction",
+      type: "info",
+    });
     const transaction1 = {
-      to: process.env.NEXT_PUBLIC_ENTRYPOINT, 
-      data: entrypointInterface.encodeFunctionData("depositTo", [paymaster]),
+      to: process.env.NEXT_PUBLIC_ENTRYPOINT,
+      data: entrypointInterface.encodeFunctionData("depositTo", [paymaster.id]),
       value: amountToFunds,
     };
 
-    const transaction2 = {
-      to: paymaster, 
-      data: paymasterInterface.encodeFunctionData("addStake", [1]),
-      value: amountToFunds,
-    };
+    // const transaction2 = {
+    //   to: paymaster.id,
+    //   data: paymasterInterface.encodeFunctionData("addStake", [1]),
+    //   value: amountToFunds,
+    // };
 
-    const transactions = [transaction1, transaction2];
+    const transactions = [transaction1];
 
     const safeOperation = await safePack.createTransaction({ transactions });
     const signedSafeOperation = await safePack.signSafeOperation(safeOperation);
     const userOperationHash = await safePack.executeTransaction({
       executable: signedSafeOperation,
     });
- 
+
     let userOperationReceipt = null;
 
     while (!userOperationReceipt) {
@@ -84,19 +86,15 @@ function PaymasterCard({
       userOperationReceipt = await safePack.getUserOperationReceipt(
         userOperationHash
       );
+
       if (userOperationReceipt) {
         showNotification({
           message: "Transaction success",
           type: "success",
         });
-        redirect("/paymasters");
       }
     }
   };
-
-
-
-
 
   return (
     <main
@@ -141,14 +139,28 @@ function PaymasterCard({
       >
         {abbreviateEthereumAddress(paymaster.owner)}
       </Link>
-      <GeneralButton
-        onClick={() => {
-          changePaymaster(paymaster.id);
-        }}
-        className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
-      >
-        Select
-      </GeneralButton>
+      {!profile && (
+        <GeneralButton
+          onClick={() => {
+            changePaymaster(paymaster.id);
+          }}
+          className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
+        >
+          Select
+        </GeneralButton>
+      )}
+      {smartAccount &&
+        paymaster.owner.toLowerCase() === smartAccount.toLowerCase() &&
+        profile && (
+          <GeneralButton
+            onClick={() => {
+              createDepositTx(ethers.utils.parseEther("0.001").toString());
+            }}
+            className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
+          >
+            Deposit 0.001 ETH
+          </GeneralButton>
+        )}
     </main>
   );
 }

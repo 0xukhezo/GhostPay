@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 function IntegrationPage() {
   const pathname = usePathname();
   const name = pathname.split("/")[2];
-  console.log(name);
+
   return (
     <div className="text-white bg-main w-screen h-screen ">
       <SideBar page={<SpecificIntegration name={name} />} />

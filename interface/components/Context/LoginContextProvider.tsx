@@ -128,6 +128,9 @@ export function LoginContextProvider({ children }: any) {
       paymasterOptions: {
         paymasterAddress: newPaymaster,
       },
+      customContracts: {
+        entryPointAddress: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+      },
       options: {
         owners: [await getAccounts()],
         threshold: 1,
