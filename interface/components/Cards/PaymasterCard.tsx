@@ -12,6 +12,7 @@ import { TokenInfo } from "../../config/types";
 // Constants
 import { generalTokens } from "../../constants/constants";
 import { abbreviateEthereumAddress } from "../../utils/utils";
+import { useLogin } from "../Context/LoginContextProvider";
 
 type PaymasterCardProps = {
   paymaster: any;
@@ -24,6 +25,7 @@ function PaymasterCard({
   allowFavorites,
 }: PaymasterCardProps) {
   const { favoritesPaymasters, setFavoritesPaymasters } = useGeneral();
+  const { changePaymaster } = useLogin();
 
   const token = generalTokens.filter(
     (token: TokenInfo) =>
@@ -88,7 +90,7 @@ function PaymasterCard({
       </Link>
       <GeneralButton
         onClick={() => {
-          console.log("paymaster tx");
+          changePaymaster(paymaster.id);
         }}
         className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
       >

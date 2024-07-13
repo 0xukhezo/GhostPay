@@ -6,14 +6,20 @@ import { abbreviateEthereumAddress } from "../../../utils/utils";
 import Spinner from "../../Spinner";
 
 function Navbar() {
-  const { smartAccount } = useLogin();
+  const { smartAccount, paymasterSelected } = useLogin();
 
   return (
     <div className="bg-main sticky top-0 z-50 py-5 border-b-1 border-greenMatrix px-8 flex justify-between text-lg items-center h-fit">
-      <p>
-        <span>Actual Paymaster:</span>
-        <span className="text-greenMatrix font-semibold ml-2">Pepito</span>
-      </p>
+      {paymasterSelected ? (
+        <p>
+          <span>Actual Paymaster:</span>
+          <span className="text-greenMatrix font-semibold ml-2">
+            {paymasterSelected}
+          </span>
+        </p>
+      ) : (
+        <span></span>
+      )}
       {smartAccount ? (
         <p className="font-semibold">
           {abbreviateEthereumAddress(smartAccount)}

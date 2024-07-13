@@ -39,6 +39,8 @@ export type LoginContextType = {
   safePack: any;
   web3AuthAddress: any;
   provider: any;
+  changePaymaster: any;
+  paymasterSelected: string | null;
 };
 
 // NotificationContextProvider types

@@ -57,7 +57,9 @@ export function LoginContextProvider({ children }: any) {
   const [web3AuthAddress, setWeb3AuthAddress] = useState<string | undefined>();
   const [safePack, setSafePack] = useState<Safe4337Pack | undefined>();
   const [smartAccount, setSmartAccount] = useState<string | undefined>();
-
+  const [paymasterSelected, setPaymasterSelected] = useState<string | null>(
+    null
+  );
   useEffect(() => {
     const init = async () => {
       try {
@@ -114,7 +116,24 @@ export function LoginContextProvider({ children }: any) {
     setSafePack(safe4337Pack);
   };
 
-  const changePaymaster = async () => {};
+  const changePaymaster = async (newPaymaster: string) => {
+    console.log(newPaymaster);
+    const safe4337Pack = await Safe4337Pack.init({
+      provider: "https://rpc.ankr.com/base_sepolia",
+      signer: await getPrivateKey(),
+      bundlerUrl: `https://api.pimlico.io/v2/84532/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
+      paymasterOptions: {
+        paymasterAddress: newPaymaster,
+      },
+      options: {
+        owners: [await getAccounts()],
+        threshold: 1,
+      },
+    });
+    setPaymasterSelected(newPaymaster);
+    setSmartAccount(await safe4337Pack.protocolKit.getAddress());
+    setSafePack(safe4337Pack);
+  };
 
   const logout = async () => {
     await web3auth.logout();
@@ -150,6 +169,8 @@ export function LoginContextProvider({ children }: any) {
     safePack,
     web3AuthAddress,
     provider,
+    changePaymaster,
+    paymasterSelected,
   };
 
   return (
