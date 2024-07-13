@@ -163,20 +163,21 @@ export function LoginContextProvider({ children }: any) {
 
   const login = async (jwt: string) => {
     if (!web3auth.connected) {
+      console.log("not connected yet!");
     }
-    if (!loggedIn) {
-      const web3authProvider = await web3auth.connectTo(
-        WALLET_ADAPTERS.OPENLOGIN,
-        {
-          loginProvider: "jwt",
-          extraLoginOptions: {
-            id_token: jwt,
-            verifierIdField: "sub",
-          },
-        }
-      );
-      setProvider(web3authProvider);
-    }
+
+    const web3authProvider = await web3auth.connectTo(
+      WALLET_ADAPTERS.OPENLOGIN,
+      {
+        loginProvider: "jwt",
+        extraLoginOptions: {
+          id_token: jwt,
+          verifierIdField: "sub",
+        },
+      }
+    );
+    setProvider(web3authProvider);
+
     if (web3auth.connected) {
       setLoggedIn(true);
       getAccounts();

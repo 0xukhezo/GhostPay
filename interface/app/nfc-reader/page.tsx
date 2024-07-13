@@ -67,7 +67,7 @@ const NFCReaderPage: React.FC = () => {
     >
       <h1 className="text-2xl font-bold mb-4 text-white">NFC Reader</h1>
       {scanning ? (
-        <p className="text-blue-500">
+        <p className="text-greenMatrix px-10 text-center">
           Scanning for NFC tags... Please hold your tag near the device.
         </p>
       ) : message ? (
@@ -79,7 +79,7 @@ const NFCReaderPage: React.FC = () => {
           </p>
           <button
             onClick={startNFCScan}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 mt-4"
+            className="bg-greenMatrix text-white py-2 px-4 rounded hover:bg-green-700 mt-4"
           >
             Start NFC Scan
           </button>
