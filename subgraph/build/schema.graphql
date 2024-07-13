@@ -1,0 +1,8 @@
+type Paymaster @entity {
+  id: ID!
+  owner: String!
+  chainId: BigInt!
+  executedUo: BigInt!
+  token: String!
+  price: BigInt!
+}

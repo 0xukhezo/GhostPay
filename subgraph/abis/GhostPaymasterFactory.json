@@ -1,0 +1,149 @@
+[
+    {
+        "type": "constructor",
+        "inputs": [
+            {
+                "name": "_entryPoint",
+                "type": "address",
+                "internalType": "contract IEntryPoint"
+            },
+            {
+                "name": "_refundPostOpCost",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "_selfKisser",
+                "type": "address",
+                "internalType": "contract ISelfKisser"
+            },
+            {
+                "name": "_stalenessThreshold",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "deploy",
+        "inputs": [
+            {
+                "name": "_token",
+                "type": "address",
+                "internalType": "contract IERC20Metadata"
+            },
+            {
+                "name": "_tokenOracle",
+                "type": "address",
+                "internalType": "contract IChronicle"
+            },
+            {
+                "name": "_nativeAssetOracle",
+                "type": "address",
+                "internalType": "contract IChronicle"
+            },
+            {
+                "name": "_owner",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "_priceMarkupLimit",
+                "type": "uint32",
+                "internalType": "uint32"
+            },
+            {
+                "name": "_priceMarkup",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "entryPoint",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IEntryPoint"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "refundPostOpCost",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "selfKisser",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract ISelfKisser"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "stalenessThreshold",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint32",
+                "internalType": "uint32"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "event",
+        "name": "NewPaymaster",
+        "inputs": [
+            {
+                "name": "paymaster",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "owner",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "token",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "priceMarkup",
+                "type": "uint32",
+                "indexed": false,
+                "internalType": "uint32"
+            }
+        ],
+        "anonymous": false
+    }
+]

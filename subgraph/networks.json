@@ -1,0 +1,8 @@
+{
+  "base-sepolia": {
+    "ERC6551Registry": {
+      "address": "0x000000006551c19487814612e58FE06813775758",
+      "startBlock": 6437755
+    }
+  }
+}

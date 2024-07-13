@@ -1,0 +1,47 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GhostPaymasterFactory
+    network: base-sepolia
+    source:
+      address: "0x4F994c4e18f1cb3088255E784E909d9b834d2CaD"
+      abi: GhostPaymasterFactory
+      startBlock: 12547947
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Paymaster
+      abis:
+        - name: GhostPaymasterFactory
+          file: ./abis/GhostPaymasterFactory.json
+      eventHandlers:
+        - event: NewPaymaster(indexed address,indexed address,indexed address,uint32)
+          handler: handleNewPaymaster
+      file: ./src/paymasterFactory.ts
+templates:
+  - name: GhostPaymaster
+    kind: ethereum/contract
+    network: base-sepolia
+    source:
+      abi: GhostPaymaster
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Paymaster
+      abis:
+        - name: GhostPaymaster
+          file: ./abis/GhostPaymaster.json
+      eventHandlers:
+        - event: MarkupUpdated(uint32)
+          handler: handleMarkupUpdate
+        - event: UserOperationSponsored(indexed bytes32,indexed address,uint256,uint256)
+          handler: handleUserOperationSponsored
+      file: ./src/paymaster.ts

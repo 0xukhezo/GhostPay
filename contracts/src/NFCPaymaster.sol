@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.23;
 
-import {BasePaymaster} from "@account-abstraction/contracts/core/BasePaymaster.sol";
-import {IEntryPoint} from "@account-abstraction/contracts/core/EntryPoint.sol";
+import {BasePaymaster} from "./BasePaymaster.sol";
+import {IEntryPoint} from "./interfaces/IEntryPoint.sol";
 import {_packValidationData} from "@account-abstraction/contracts/core/Helpers.sol";
 import {UserOperationLib} from "@account-abstraction/contracts/core/UserOperationLib.sol";
 import {PackedUserOperation} from "@account-abstraction/contracts/interfaces/PackedUserOperation.sol";
