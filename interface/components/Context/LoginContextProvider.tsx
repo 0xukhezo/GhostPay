@@ -7,6 +7,7 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import Web3 from "web3";
 import { Safe4337Pack } from "@safe-global/relay-kit";
 import { LoginContextType } from "./types";
+import { useNotification } from "./NotificationContextProvider";
 
 export const LoginContext = createContext<LoginContextType | null>(null);
 
@@ -60,6 +61,7 @@ export function LoginContextProvider({ children }: any) {
   const [paymasterSelected, setPaymasterSelected] = useState<string | null>(
     null
   );
+  const { showNotification } = useNotification();
 
   useEffect(() => {
     const init = async () => {
@@ -119,6 +121,10 @@ export function LoginContextProvider({ children }: any) {
   };
 
   const changeToSmartAccount = async () => {
+    showNotification({
+      message: "Loading paymaster",
+      type: "info",
+    });
     const safe4337Pack = await Safe4337Pack.init({
       provider: "https://rpc.ankr.com/base_sepolia",
       signer: await getPrivateKey(),
@@ -131,18 +137,19 @@ export function LoginContextProvider({ children }: any) {
     setPaymasterSelected(null);
     setSmartAccount(await safe4337Pack.protocolKit.getAddress());
     setSafePack(safe4337Pack);
+    showNotification({
+      message: "Paymaster selected",
+      type: "success",
+    });
   };
 
-  const changePaymaster = async (
-    newPaymaster: string,
-    newPaymasterTitle?: string
-  ) => {
+  const changePaymaster = async (newPaymaster: string) => {
     const safe4337Pack = await Safe4337Pack.init({
       provider: "https://rpc.ankr.com/base_sepolia",
       signer: await getPrivateKey(),
       bundlerUrl: `https://api.pimlico.io/v2/84532/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
       paymasterOptions: {
-        paymasterAddress: "0xc3E4950Abf69eE61aB2e9BA4a8AfB8429132Df8D",
+        paymasterAddress: newPaymaster,
         paymasterTokenAddress: "0x25466530DE4e382EcBc0834ADFA3CaF158A451dA",
       },
       customContracts: {
@@ -153,7 +160,7 @@ export function LoginContextProvider({ children }: any) {
       },
     });
 
-    setPaymasterSelected("0xc3E4950Abf69eE61aB2e9BA4a8AfB8429132Df8D");
+    setPaymasterSelected(newPaymaster);
     setSafePack(safe4337Pack);
   };
 

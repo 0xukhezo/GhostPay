@@ -11,7 +11,7 @@ type NotificationProps = {
 export default function Notification({ message, color }: NotificationProps) {
   return (
     <div
-      className={`lg:max-w-[350px] h-fit rounded-xl z-50 my-2 bg-white absolute right-5 bottom-4`}
+      className={`lg:max-w-[350px] h-fit rounded-xl z-50 my-2 bg-white absolute right-5 bottom-4 font-semibold`}
       style={{
         border: `1px solid ${color}`,
       }}

@@ -11,6 +11,24 @@ body {
   box-shadow: 0 0 40px #4aba4c;
 }
 
+.cardStakingIntegration{
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 20px #4aba4c;
+  }
+
+  50% {
+    box-shadow: 0 0 60px #4aba4c;
+  }
+
+  100% {
+    box-shadow: 0 0 20px #4aba4c;
+  }
+}
+
 .login {
   width: 50%;
   opacity: 1

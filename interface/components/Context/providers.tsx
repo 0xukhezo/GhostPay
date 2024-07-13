@@ -16,13 +16,13 @@ import { config } from "../../config/wagmiConfig";
 export default function Providers({ children }: ProviderProps) {
   return (
     <WagmiConfig config={config}>
-      <LoginContextProvider>
-        <NotificationContextProvider>
+      <NotificationContextProvider>
+        <LoginContextProvider>
           <GeneralContextProvider>
             <ModalContextProvider>{children}</ModalContextProvider>
           </GeneralContextProvider>
-        </NotificationContextProvider>
-      </LoginContextProvider>
+        </LoginContextProvider>{" "}
+      </NotificationContextProvider>
     </WagmiConfig>
   );
 }

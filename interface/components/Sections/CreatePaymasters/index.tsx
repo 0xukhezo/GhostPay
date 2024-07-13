@@ -3,12 +3,10 @@
 import React, { useEffect, useState } from "react";
 // Constants
 import {
-  entrypointBaseContract,
   factoryPaymasterContract,
   generalTokens,
   initialSteps,
 } from "../../../constants/constants";
-import { redirect } from "next/navigation";
 import { TokenInfo } from "../../../config/types";
 import { useModal } from "../../Context/ModalContextProvider";
 import GeneralButton from "../../Buttons/GeneralButton";
@@ -137,7 +135,6 @@ function CreatePaymasters() {
         userOperationReceipt = await safePack.getUserOperationReceipt(
           userOperationHash
         );
-        console.log(userOperationReceipt);
         showNotification({
           message: "Approve transaction success",
           type: "success",
@@ -272,7 +269,7 @@ function CreatePaymasters() {
       <GeneralButton
         onClick={async () => {
           if (paymasterSelected) {
-            await changeToSmartAccount();
+            await changeToSmartAccount(paymasterSelected);
           }
           createPaymasterTx(token, price);
         }}

@@ -154,8 +154,16 @@ function PaymasterCard({
       </Link>
       {!profile && (
         <GeneralButton
-          onClick={() => {
-            changePaymaster(paymaster.id);
+          onClick={async () => {
+            showNotification({
+              message: "Selecting paymaster",
+              type: "info",
+            });
+            await changePaymaster(paymaster.id);
+            showNotification({
+              message: "Paymaster selected",
+              type: "success",
+            });
           }}
           className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
         >
@@ -167,7 +175,7 @@ function PaymasterCard({
         profile && (
           <GeneralButton
             onClick={() => {
-              createDepositTx(ethers.utils.parseEther("0.00005").toString());
+              createDepositTx(ethers.utils.parseEther("0.0001").toString());
             }}
             className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
           >
