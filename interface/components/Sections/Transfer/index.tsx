@@ -88,6 +88,8 @@ function TransferSection() {
           message: "Approve transaction success",
           type: "success",
         });
+        setAmount(0);
+        setReceiver("");
       }
     } catch (err: any) {
       console.log(err);
@@ -178,13 +180,15 @@ function TransferSection() {
           token === null ||
           amount === undefined ||
           receiver === undefined ||
-          paymasterSelected === null
+          paymasterSelected === null ||
+          receiver === ""
         }
         className={`mt-12 px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold ${
           (token === null ||
             amount === undefined ||
             receiver === undefined ||
-            paymasterSelected === null) &&
+            paymasterSelected === null ||
+            receiver === "") &&
           "opacity-50"
         }`}
       >
