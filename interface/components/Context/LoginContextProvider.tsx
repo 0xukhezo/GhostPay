@@ -121,7 +121,6 @@ export function LoginContextProvider({ children }: any) {
     newPaymaster: string,
     newPaymasterTitle?: string
   ) => {
-    console.log(newPaymaster);
     const safe4337Pack = await Safe4337Pack.init({
       provider: "https://rpc.ankr.com/base_sepolia",
       signer: await getPrivateKey(),
