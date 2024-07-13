@@ -13,6 +13,8 @@ import { TokenInfo } from "../../config/types";
 import { generalTokens } from "../../constants/constants";
 import { abbreviateEthereumAddress } from "../../utils/utils";
 import { useLogin } from "../Context/LoginContextProvider";
+import { ethers } from "ethers";
+import { abiEntryPoint, abiPaymaster } from "../../abis";
 
 type PaymasterCardProps = {
   paymaster: any;
@@ -25,7 +27,7 @@ function PaymasterCard({
   allowFavorites,
 }: PaymasterCardProps) {
   const { favoritesPaymasters, setFavoritesPaymasters } = useGeneral();
-  const { changePaymaster } = useLogin();
+  const { changePaymaster, safePack } = useLogin();
 
   const token = generalTokens.filter(
     (token: TokenInfo) =>
@@ -44,6 +46,57 @@ function PaymasterCard({
       setFavoritesPaymasters([...favoritesPaymasters, paymaster]);
     }
   };
+
+
+  const createDepositTx = async (amountToFunds: string) => {
+    const provider1 = new ethers.providers.JsonRpcProvider(
+      "https://docs.safe.global/home/4337-supported-networks"
+    );
+
+    const entrypointInterface = new ethers.utils.Interface(abiEntryPoint);
+    const paymasterInterface = new ethers.utils.Interface(abiPaymaster);
+
+    const transaction1 = {
+      to: process.env.NEXT_PUBLIC_ENTRYPOINT, 
+      data: entrypointInterface.encodeFunctionData("depositTo", [paymaster]),
+      value: amountToFunds,
+    };
+
+    const transaction2 = {
+      to: paymaster, 
+      data: paymasterInterface.encodeFunctionData("addStake", [1]),
+      value: amountToFunds,
+    };
+
+    const transactions = [transaction1, transaction2];
+
+    const safeOperation = await safePack.createTransaction({ transactions });
+    const signedSafeOperation = await safePack.signSafeOperation(safeOperation);
+    const userOperationHash = await safePack.executeTransaction({
+      executable: signedSafeOperation,
+    });
+ 
+    let userOperationReceipt = null;
+
+    while (!userOperationReceipt) {
+      // Wait 2 seconds before checking the status again
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      userOperationReceipt = await safePack.getUserOperationReceipt(
+        userOperationHash
+      );
+      if (userOperationReceipt) {
+        showNotification({
+          message: "Transaction success",
+          type: "success",
+        });
+        redirect("/paymasters");
+      }
+    }
+  };
+
+
+
+
 
   return (
     <main
