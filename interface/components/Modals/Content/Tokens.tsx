@@ -7,17 +7,17 @@ import { TokenInfo } from "../../../config/types";
 import TokenCard from "../../Cards/TokenCard";
 import SearchBar from "../../Inputs/SearchBar";
 // Constants
-import { generalTokens } from "../../../constants/constants";
+import {} from "../../../constants/constants";
 // Context
 import { useModal } from "../../Context/ModalContextProvider";
 
 type TokensProps = {
   getToken: (token: TokenInfo) => void;
+  generalTokens: TokenInfo[];
 };
 
-export default function Tokens({ getToken }: TokensProps) {
+export default function Tokens({ getToken, generalTokens }: TokensProps) {
   const { setIsModalOpen } = useModal();
-
   const [tokens, setTokens] = useState<TokenInfo[]>([...generalTokens]);
   const [search, setSearch] = useState<string>("");
 

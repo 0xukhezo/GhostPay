@@ -1,8 +1,12 @@
+"use cleint";
+// React
 import React, { useEffect, useState } from "react";
+// Wagmi
 import { useContractRead } from "wagmi";
-
-import PositionCardInfo from "./PositionCardInfo";
+// Abis
 import { abiINonfungiblePositionManager } from "../../../abis";
+// Components
+import PositionCardInfo from "./PositionCardInfo";
 
 interface UniswapPositionCardInterface {
   id: string;
@@ -28,7 +32,17 @@ export default function UniswapPositionCard({
     <div>
       <>
         {dataPosition !== undefined && dataPosition[7].toString() !== "0" && (
-          <div className="rounded-lg bg-beige px-4 py-8 mt-4 ">pepe</div>
+          <div className="rounded-lg bg-beige px-4 py-8 mt-4 ">
+            <PositionCardInfo
+              id={id}
+              token0={dataPosition[2]}
+              token1={dataPosition[3]}
+              fee={dataPosition[4]}
+              tickUpper={dataPosition[5]}
+              tickLower={dataPosition[6]}
+              liquidity={dataPosition[7]}
+            />
+          </div>
         )}
       </>
     </div>

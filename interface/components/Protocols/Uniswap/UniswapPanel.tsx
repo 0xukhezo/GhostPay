@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // Context
 import { useLogin } from "../../Context/LoginContextProvider";
 // Components
 import GeneralButton from "../../Buttons/GeneralButton";
 import UniswapFeed from "../../Feeds/UniswapFeed";
+import OpenUniswapPosition from "./OpenUniswapPosition";
 
 interface UniswapPanelInterface {
   display: string;
@@ -42,10 +43,11 @@ export default function UniswapPanel({
               </GeneralButton>
             </p>
           </h2>
+
           <UniswapFeed uniswapPositionsID={uniswapPositionsID} />
         </>
       ) : (
-        <div>Pepe</div>
+        <OpenUniswapPosition displayPositions={displayPositions} />
       )}
     </main>
   );

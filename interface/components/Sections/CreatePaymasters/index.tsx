@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 // Constants
-import { initialSteps } from "../../../constants/constants";
+import { generalTokens, initialSteps } from "../../../constants/constants";
 import { TokenInfo } from "../../../config/types";
 import { useModal } from "../../Context/ModalContextProvider";
 import GeneralButton from "../../Buttons/GeneralButton";
@@ -280,7 +280,9 @@ function CreatePaymasters() {
           <GeneralButton
             onClick={() => {
               setIsModalOpen(true);
-              setContent(<Tokens getToken={getToken} />);
+              setContent(
+                <Tokens getToken={getToken} generalTokens={generalTokens} />
+              );
               setTitle("Select Token");
             }}
             disabled={paymasterTitle === undefined || paymasterTitle === ""}

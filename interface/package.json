@@ -16,6 +16,7 @@
     "@safe-global/relay-kit": "^3.0.2",
     "@types/identicon.js": "^2.3.4",
     "@types/jsonwebtoken": "^9.0.6",
+    "@uniswap/v3-sdk": "^3.13.1",
     "@web3auth/base": "^8.7.0",
     "@web3auth/ethereum-provider": "^8.7.0",
     "@web3auth/no-modal": "^8.7.0",
