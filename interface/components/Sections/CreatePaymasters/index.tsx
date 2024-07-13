@@ -7,6 +7,7 @@ import {
   generalTokens,
   initialSteps,
 } from "../../../constants/constants";
+import { redirect } from "next/navigation";
 import { TokenInfo } from "../../../config/types";
 import { useModal } from "../../Context/ModalContextProvider";
 import GeneralButton from "../../Buttons/GeneralButton";
@@ -15,19 +16,26 @@ import Steps from "../../Steps/Steps";
 import { useLogin } from "../../Context/LoginContextProvider";
 import { BigNumber, ethers } from "ethers";
 import { ghostPayFactoryAbi } from "../../../abis";
+import { useNotification } from "../../Context/NotificationContextProvider";
 
 function CreatePaymasters() {
   const [steps, setSteps] = useState(initialSteps);
   const [token, setToken] = useState<TokenInfo | null>(null);
   const [price, setPrice] = useState<number | undefined>(undefined);
+  const [loadingTx, setLoadingTx] = useState<boolean>(false);
+
   const { setIsModalOpen, setContent, setTitle } = useModal();
   const { safePack, smartAccount } = useLogin();
+  const { showNotification } = useNotification();
 
   const getToken = (token: any) => {
     setToken(token);
   };
 
-  const createTx = async (token: TokenInfo | null) => {
+  const createTx = async (
+    token: TokenInfo | null,
+    price: number | undefined
+  ) => {
     const provider1 = new ethers.providers.JsonRpcProvider(
       "https://docs.safe.global/home/4337-supported-networks"
     );
@@ -38,9 +46,10 @@ function CreatePaymasters() {
       provider1
     );
 
-    const tokenERC = token?.contract; // token que seleciona
-    const oracle = token?.oracle; // variable
+    const tokenERC = token?.contract;
+    const oracle = token?.oracle;
     const ethOracle = "0xea347Db6ef446e03745c441c17018eF3d641Bc8f";
+    const fee = price ? price : 1;
 
     const transaction1 = {
       to: factoryPaymasterContract, //factory
@@ -49,18 +58,22 @@ function CreatePaymasters() {
         oracle,
         ethOracle,
         smartAccount,
-        1200000,
-        1000000,
+        900000,
+        1000000 + fee * 10000,
       ]),
       value: BigNumber.from(0).toString(),
     };
-
+    setLoadingTx(true);
     const transactions = [transaction1];
 
     const safeOperation = await safePack.createTransaction({ transactions });
     const signedSafeOperation = await safePack.signSafeOperation(safeOperation);
     const userOperationHash = await safePack.executeTransaction({
       executable: signedSafeOperation,
+    });
+    showNotification({
+      message: "Sending Transaction",
+      type: "info",
     });
     let userOperationReceipt = null;
 
@@ -70,6 +83,13 @@ function CreatePaymasters() {
       userOperationReceipt = await safePack.getUserOperationReceipt(
         userOperationHash
       );
+      if (userOperationReceipt) {
+        showNotification({
+          message: "Transaction success",
+          type: "success",
+        });
+        redirect("/paymasters");
+      }
     }
   };
 
@@ -111,13 +131,19 @@ function CreatePaymasters() {
 
   return (
     <div className="fade-in flex flex-col items-center">
-      <h2 className="pb-1 flex justify-between w-full pt-8 ">
+      <h2 className="pb-1 flex flex-col justify-between w-full pt-8">
         <p className="flex flex-row items-center z-10 justify-between w-full">
           <span className="text-base text-start text-base md:text-2xl">
             Create Paymaster
           </span>
         </p>
+        <div className="text-gray-400 mt-4">
+          In order to create a paymaster you need to enter the ERC-20 token you
+          would like users to pay gas with. You can also set the a custom fee
+          inventivizing the use of the token.
+        </div>
       </h2>
+
       <div className="pt-8 pb-20 grid grid-cols-4 gap-x-6 px-40">
         <div className="col-span-2">
           <Steps steps={steps} />
@@ -157,6 +183,7 @@ function CreatePaymasters() {
             type="number"
             value={price}
             min={0}
+            max={20}
             step={1 / 10 ** 18}
             onChange={(e) => {
               if (Number(e.target.value) >= 0) {
@@ -176,9 +203,9 @@ function CreatePaymasters() {
       </div>
       <GeneralButton
         onClick={() => {
-          createTx(token);
+          createTx(token, price);
         }}
-        disabled={token === null || price === undefined}
+        disabled={token === null || price === undefined || loadingTx}
         className={`px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold ${
           price === undefined && "opacity-50"
         }`}

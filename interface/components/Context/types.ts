@@ -40,3 +40,14 @@ export type LoginContextType = {
   web3AuthAddress: any;
   provider: any;
 };
+
+// NotificationContextProvider types
+
+export type NotificationType = {
+  message: string;
+  type: "success" | "error" | "warning" | "info";
+};
+
+export type NotificationContextType = {
+  showNotification: (notification: NotificationType) => void;
+};

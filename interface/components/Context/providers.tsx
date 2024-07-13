@@ -7,6 +7,7 @@ import { ProviderProps } from "./types";
 import { LoginContextProvider } from "./LoginContextProvider";
 import { GeneralContextProvider } from "./GeneralContextProvider";
 import { ModalContextProvider } from "./ModalContextProvider";
+import { NotificationContextProvider } from "./NotificationContextProvider";
 // Wagmi
 import { WagmiConfig } from "wagmi";
 // Config
@@ -16,9 +17,11 @@ export default function Providers({ children }: ProviderProps) {
   return (
     <WagmiConfig config={config}>
       <LoginContextProvider>
-        <GeneralContextProvider>
-          <ModalContextProvider>{children}</ModalContextProvider>
-        </GeneralContextProvider>
+        <NotificationContextProvider>
+          <GeneralContextProvider>
+            <ModalContextProvider>{children}</ModalContextProvider>
+          </GeneralContextProvider>
+        </NotificationContextProvider>
       </LoginContextProvider>
     </WagmiConfig>
   );

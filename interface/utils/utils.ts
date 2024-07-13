@@ -1,6 +1,14 @@
 import { BigNumber } from "ethers";
 import { ERC20 } from "../types/ERC20";
 import { INonfungiblePositionManager } from "../types/INonfungiblePositionManager";
+import { NotificationType } from "../components/Context/types";
+// Config
+import {
+  NOTIFICATION_ERROR_COLOR,
+  NOTIFICATION_INFO_COLOR,
+  NOTIFICATION_SUCCESS_COLOR,
+  NOTIFICATION_WARNING_COLOR,
+} from "../config/uiConfig";
 
 const capitalizeFirstLetter = (content: string): string => {
   if (content.length === 0) {
@@ -40,7 +48,23 @@ async function createProposalClosePositionUniswap(
   console.log("Closes Uniswap tx");
 }
 
+function getColorForType(type: NotificationType["type"]): string {
+  switch (type) {
+    case "success":
+      return NOTIFICATION_SUCCESS_COLOR;
+    case "error":
+      return NOTIFICATION_ERROR_COLOR;
+    case "warning":
+      return NOTIFICATION_WARNING_COLOR;
+    case "info":
+      return NOTIFICATION_INFO_COLOR;
+    default:
+      return NOTIFICATION_INFO_COLOR;
+  }
+}
+
 export {
+  getColorForType,
   capitalizeFirstLetter,
   abbreviateEthereumAddress,
   createProposalClosePositionUniswap,
