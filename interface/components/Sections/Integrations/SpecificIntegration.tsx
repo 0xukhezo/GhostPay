@@ -5,7 +5,7 @@ import TransferSection from "../Transfer";
 function SpecificIntegration() {
   return (
     <div className="my-20">
-      <TransferSection />;
+      <TransferSection />
     </div>
   );
 }

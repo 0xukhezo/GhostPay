@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { CHAIN_NAMESPACES, IProvider, WALLET_ADAPTERS } from "@web3auth/base";
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
@@ -7,7 +7,6 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import Web3 from "web3";
 import { Safe4337Pack } from "@safe-global/relay-kit";
 import { LoginContextType } from "./types";
-import { useNotification } from "./NotificationContextProvider";
 
 export const LoginContext = createContext<LoginContextType | null>(null);
 
@@ -61,10 +60,14 @@ export function LoginContextProvider({ children }: any) {
   const [paymasterSelected, setPaymasterSelected] = useState<string | null>(
     null
   );
-  const { showNotification } = useNotification();
+
+  const initializedRef = useRef(false);
 
   useEffect(() => {
     const init = async () => {
+      if (initializedRef.current) return;
+      initializedRef.current = true;
+
       try {
         await web3auth.init();
         setProvider(web3auth.provider);
@@ -77,6 +80,7 @@ export function LoginContextProvider({ children }: any) {
         console.error(error);
       }
     };
+
     init();
   }, []);
 
@@ -121,10 +125,6 @@ export function LoginContextProvider({ children }: any) {
   };
 
   const changeToSmartAccount = async () => {
-    showNotification({
-      message: "Loading paymaster",
-      type: "info",
-    });
     const safe4337Pack = await Safe4337Pack.init({
       provider: "https://rpc.ankr.com/base_sepolia",
       signer: await getPrivateKey(),
@@ -137,10 +137,6 @@ export function LoginContextProvider({ children }: any) {
     setPaymasterSelected(null);
     setSmartAccount(await safe4337Pack.protocolKit.getAddress());
     setSafePack(safe4337Pack);
-    showNotification({
-      message: "Paymaster selected",
-      type: "success",
-    });
   };
 
   const changePaymaster = async (newPaymaster: string) => {
