@@ -117,7 +117,10 @@ export function LoginContextProvider({ children }: any) {
     setSafePack(safe4337Pack);
   };
 
-  const changePaymaster = async (newPaymaster: string) => {
+  const changePaymaster = async (
+    newPaymaster: string,
+    newPaymasterTitle?: string
+  ) => {
     console.log(newPaymaster);
     const safe4337Pack = await Safe4337Pack.init({
       provider: "https://rpc.ankr.com/base_sepolia",
@@ -131,7 +134,7 @@ export function LoginContextProvider({ children }: any) {
         threshold: 1,
       },
     });
-    setPaymasterSelected(newPaymaster);
+    setPaymasterSelected(newPaymasterTitle || newPaymaster);
     setSmartAccount(await safe4337Pack.protocolKit.getAddress());
     setSafePack(safe4337Pack);
   };
