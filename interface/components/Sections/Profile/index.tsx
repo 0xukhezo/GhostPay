@@ -7,13 +7,21 @@ import { usePathname } from "next/navigation";
 import Identicon from "identicon.js";
 
 import Link from "next/link";
-import { paymasters } from "../../../constants/constants";
+
 import PaymasterCard from "../../Cards/PaymasterCard";
+import { useFetchPaymaster } from "../../../hooks/usePaymasters";
+import { PaymasterInfo } from "../../../config/types";
+import { useLogin } from "../../Context/LoginContextProvider";
 
 function ProfileSection() {
+  const { paymasters } = useFetchPaymaster();
+  const { smartAccount } = useLogin();
   const pathname = usePathname();
-  console.log(pathname);
-  const ownedPaymasters: any[] = [];
+
+  const ownedPaymasters = paymasters.filter((paymaster: PaymasterInfo) => {
+    return paymaster.owner === smartAccount;
+  });
+
   return (
     <main>
       <div className="flex items-center mt-8">
@@ -38,19 +46,17 @@ function ProfileSection() {
         Your Paymasters
       </h2>{" "}
       {ownedPaymasters.length !== 0 ? (
-        <>
-          <div className="mt-4">
-            {paymasters.map((paymaster: any, index: number) => {
-              return (
-                <PaymasterCard
-                  key={`${paymaster.title}-${index}`}
-                  index={index}
-                  paymaster={paymaster}
-                />
-              );
-            })}
-          </div>
-        </>
+        <div className="mt-4">
+          {ownedPaymasters.map((paymaster: any, index: number) => {
+            return (
+              <PaymasterCard
+                key={`${paymaster.title}-${index}`}
+                index={index}
+                paymaster={paymaster}
+              />
+            );
+          })}
+        </div>
       ) : (
         <p className="flex flex-col items-center text-lg mt-10">
           <span className="mb-4">You don't have any paymaster created</span>

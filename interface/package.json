@@ -23,6 +23,7 @@
     "@web3auth/openlogin-adapter": "^8.7.0",
     "asn1.js": "^5.4.1",
     "ethers": "5",
+    "graphql": "^16.9.0",
     "identicon.js": "^2.3.3",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.2.4",

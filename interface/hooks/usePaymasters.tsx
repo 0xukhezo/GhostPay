@@ -3,12 +3,19 @@ import { useEffect, useState } from "react";
 // Graph
 import { Graph, client } from "../app/api/graph/route";
 
-export const useFetchLoans = () => {
+export const useFetchPaymaster = () => {
   const [paymasters, setPaymasters] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function fetchPaymasters() {
-    const queryBody = PAYMASTER_QUERY;
+    const queryBody = `query MyQuery {
+            paymasters {
+                id
+                token
+                price
+                owner
+            }
+        }`;
 
     try {
       let response = await client.query({ query: Graph(queryBody) });

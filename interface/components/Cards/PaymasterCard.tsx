@@ -26,16 +26,16 @@ function PaymasterCard({
   const { favoritesPaymasters, setFavoritesPaymasters } = useGeneral();
 
   const token = generalTokens.filter(
-    (token: TokenInfo) => token.contract === paymaster.token
+    (token: TokenInfo) =>
+      token.contract.toLowerCase() === paymaster.token.toLowerCase()
   );
-  const isFavorite = favoritesPaymasters.some(
-    (fav) => fav.title === paymaster.title
-  );
+
+  const isFavorite = favoritesPaymasters.some((fav) => fav.id === paymaster.id);
 
   const handleToggleFavorite = () => {
     if (isFavorite) {
       const updatedFavorites = favoritesPaymasters.filter(
-        (fav) => fav.title !== paymaster.title
+        (fav) => fav.id !== paymaster.id
       );
       setFavoritesPaymasters(updatedFavorites);
     } else {
@@ -60,7 +60,9 @@ function PaymasterCard({
           onClick={handleToggleFavorite}
         />
       )}
-      <span className="flex justify-center col-span-2">{paymaster.title}</span>
+      <span className="flex justify-center col-span-2">
+        Paymaster-{token[0].symbol}
+      </span>
       <span className="flex justify-center col-span-2">
         {token[0].image && (
           <img
@@ -72,7 +74,11 @@ function PaymasterCard({
         )}
       </span>
       <span className="flex justify-center col-span-2">
-        {paymaster.price} {token[0].symbol} / gwei
+        {Number(paymaster.price) - 1000000 === 0 ? (
+          <span>No commision</span>
+        ) : (
+          <span>{(Number(paymaster.price) - 1000000) / 10 ** 4} %</span>
+        )}
       </span>
       <Link
         href={`/profile/${paymaster.owner}`}

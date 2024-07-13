@@ -21,6 +21,8 @@ import { useGeneral } from "../../Context/GeneralContextProvider";
 import { useLogin } from "../../Context/LoginContextProvider";
 
 import Logo from "../../../public/logo.svg";
+import { TokenInfo } from "../../../config/types";
+import { generalTokens } from "../../../constants/constants";
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
@@ -242,7 +244,16 @@ export default function SideBar({ page }: SideBarProps) {
               {favoritesPaymasters.length > 0 ? (
                 <div className="font-semibold text-lg text-greenMatrix">
                   {favoritesPaymasters.slice(0, 3).map((paymaster: any) => {
-                    return <div className="pt-4 pb-6">{paymaster.title}</div>;
+                    const token = generalTokens.filter(
+                      (token: TokenInfo) =>
+                        token.contract.toLowerCase() ===
+                        paymaster.token.toLowerCase()
+                    );
+                    return (
+                      <div className="pt-4 pb-6">
+                        Paymaster-{token[0].symbol}
+                      </div>
+                    );
                   })}
                   {favoritesPaymasters.length >= 3 && (
                     <Link

@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
   const [transition, setTransition] = useState<boolean>(false);
 
   const generateQrCode = () => {
-    const url = `https://172.20.10.4:3000/nfc-reader`;
+    const url = `https://172.20.10.2:3000/nfc-reader`;
     setIsModalOpen(true);
     setContent(<Qr qrUrl={url} />);
     setTitle(`Scan this QR`);
@@ -63,7 +63,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="flex flex-row w-screen h-screen text-white bg-main">
-      {!loggedIn && !dataLoaded ? (
+      {loggedIn && dataLoaded ? (
         <div className="text-white bg-main w-screen h-screen ">
           <SideBar page={<Home />} />
         </div>

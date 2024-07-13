@@ -2,7 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 // Constants
-import { generalTokens, initialSteps } from "../../../constants/constants";
+import {
+  factoryPaymasterContract,
+  generalTokens,
+  initialSteps,
+} from "../../../constants/constants";
 import { TokenInfo } from "../../../config/types";
 import { useModal } from "../../Context/ModalContextProvider";
 import GeneralButton from "../../Buttons/GeneralButton";
@@ -10,12 +14,10 @@ import Tokens from "../../Modals/Content/Tokens";
 import Steps from "../../Steps/Steps";
 import { useLogin } from "../../Context/LoginContextProvider";
 import { BigNumber, ethers } from "ethers";
+import { ghostPayFactoryAbi } from "../../../abis";
 
 function CreatePaymasters() {
   const [steps, setSteps] = useState(initialSteps);
-  const [paymasterTitle, setPaymasterTitle] = useState<undefined | string>(
-    undefined
-  );
   const [token, setToken] = useState<TokenInfo | null>(null);
   const [price, setPrice] = useState<number | undefined>(undefined);
   const { setIsModalOpen, setContent, setTitle } = useModal();
@@ -25,141 +27,23 @@ function CreatePaymasters() {
     setToken(token);
   };
 
-  const createTx = async () => {
+  const createTx = async (token: TokenInfo | null) => {
     const provider1 = new ethers.providers.JsonRpcProvider(
       "https://docs.safe.global/home/4337-supported-networks"
     );
 
-    const ghostPayFactoryAbi = [
-      {
-        type: "constructor",
-        inputs: [
-          {
-            name: "_entryPoint",
-            type: "address",
-            internalType: "contract IEntryPoint",
-          },
-          {
-            name: "_refundPostOpCost",
-            type: "uint256",
-            internalType: "uint256",
-          },
-          {
-            name: "_selfKisser",
-            type: "address",
-            internalType: "contract ISelfKisser",
-          },
-          {
-            name: "_stalenessThreshold",
-            type: "uint32",
-            internalType: "uint32",
-          },
-        ],
-        stateMutability: "nonpayable",
-      },
-      {
-        type: "function",
-        name: "deploy",
-        inputs: [
-          {
-            name: "_token",
-            type: "address",
-            internalType: "contract IERC20Metadata",
-          },
-          {
-            name: "_tokenOracle",
-            type: "address",
-            internalType: "contract IChronicle",
-          },
-          {
-            name: "_nativeAssetOracle",
-            type: "address",
-            internalType: "contract IChronicle",
-          },
-          { name: "_owner", type: "address", internalType: "address" },
-          { name: "_priceMarkupLimit", type: "uint32", internalType: "uint32" },
-          { name: "_priceMarkup", type: "uint32", internalType: "uint32" },
-        ],
-        outputs: [],
-        stateMutability: "nonpayable",
-      },
-      {
-        type: "function",
-        name: "entryPoint",
-        inputs: [],
-        outputs: [
-          { name: "", type: "address", internalType: "contract IEntryPoint" },
-        ],
-        stateMutability: "view",
-      },
-      {
-        type: "function",
-        name: "refundPostOpCost",
-        inputs: [],
-        outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
-        stateMutability: "view",
-      },
-      {
-        type: "function",
-        name: "selfKisser",
-        inputs: [],
-        outputs: [
-          { name: "", type: "address", internalType: "contract ISelfKisser" },
-        ],
-        stateMutability: "view",
-      },
-      {
-        type: "function",
-        name: "stalenessThreshold",
-        inputs: [],
-        outputs: [{ name: "", type: "uint32", internalType: "uint32" }],
-        stateMutability: "view",
-      },
-      {
-        type: "event",
-        name: "NewPaymaster",
-        inputs: [
-          {
-            name: "paymaster",
-            type: "address",
-            indexed: true,
-            internalType: "address",
-          },
-          {
-            name: "owner",
-            type: "address",
-            indexed: true,
-            internalType: "address",
-          },
-          {
-            name: "token",
-            type: "address",
-            indexed: true,
-            internalType: "address",
-          },
-          {
-            name: "priceMarkup",
-            type: "uint32",
-            indexed: false,
-            internalType: "uint32",
-          },
-        ],
-        anonymous: false,
-      },
-    ];
-
     const ghostPayFactoryContract = new ethers.Contract(
-      "0x0Af6A440acE5b6cB8c5962F1B7A4503e66129873",
+      factoryPaymasterContract,
       ghostPayFactoryAbi,
       provider1
     );
 
-    const tokenERC = "0x25466530DE4e382EcBc0834ADFA3CaF158A451dA";
-    const oracle = "0x3F982a82B4B6bd09b1DAF832140F166b595FEF7F";
-    const ethOracle = "0xdd6D76262Fd7BdDe428dcfCd94386EbAe0151603";
+    const tokenERC = token?.contract; // token que seleciona
+    const oracle = token?.oracle; // variable
+    const ethOracle = "0xea347Db6ef446e03745c441c17018eF3d641Bc8f";
 
     const transaction1 = {
-      to: "0x0Af6A440acE5b6cB8c5962F1B7A4503e66129873", //factory
+      to: factoryPaymasterContract, //factory
       data: ghostPayFactoryContract.interface.encodeFunctionData("deploy", [
         tokenERC,
         oracle,
@@ -190,44 +74,16 @@ function CreatePaymasters() {
   };
 
   useEffect(() => {
-    if (paymasterTitle && token === null)
-      setSteps([
-        {
-          name: "Name your Paymaster",
-          description: "Name your paymaster to find it easily",
-          status: "complete",
-        },
-        {
-          name: "Select Token",
-          description:
-            "Your paymaster will receive this token for pay gas fees.",
-          status: "current",
-        },
-        {
-          name: "Select price",
-          description:
-            "This is the price of the selected token you are going to receive per gwei.",
-          status: "upcoming",
-        },
-      ]);
-  }, [paymasterTitle]);
-
-  useEffect(() => {
     if (token && price === undefined)
       setSteps([
         {
-          name: "Name your Paymaster",
-          description: "Name your paymaster to find it easily",
-          status: "complete",
-        },
-        {
           name: "Select Token",
           description:
             "Your paymaster will receive this token for pay gas fees.",
           status: "complete",
         },
         {
-          name: "Select price",
+          name: "Select Fee",
           description:
             "This is the price of the selected token you are going to receive per gwei.",
           status: "current",
@@ -239,18 +95,13 @@ function CreatePaymasters() {
     if (price !== undefined)
       setSteps([
         {
-          name: "Name your Paymaster",
-          description: "Name your paymaster to find it easily",
-          status: "complete",
-        },
-        {
           name: "Select Token",
           description:
             "Your paymaster will receive this token for pay gas fees.",
           status: "complete",
         },
         {
-          name: "Select price",
+          name: "Select Fee",
           description:
             "This is the price of the selected token you are going to receive per gwei.",
           status: "complete",
@@ -267,16 +118,12 @@ function CreatePaymasters() {
           </span>
         </p>
       </h2>
-      <div className="px-10 pt-8 pb-20 grid grid-cols-2 gap-x-6">
-        <Steps steps={steps} />
-        <div className="flex flex-col justify-between items-start">
-          <input
-            type="text"
-            value={paymasterTitle}
-            onChange={(e) => setPaymasterTitle(e.target.value)}
-            placeholder="GhostPay Paymaster"
-            className="rounded-xl px-4 w-full bg-gray-300 text-main pr-8 py-1 font-light h-[46px] ring-0 focus:ring-0 outline-0 w-[20rem]"
-          />
+      <div className="pt-8 pb-20 grid grid-cols-4 gap-x-6 px-40">
+        <div className="col-span-2">
+          <Steps steps={steps} />
+        </div>
+
+        <div className="flex flex-col justify-between col-span-2">
           <GeneralButton
             onClick={() => {
               setIsModalOpen(true);
@@ -285,26 +132,25 @@ function CreatePaymasters() {
               );
               setTitle("Select Token");
             }}
-            disabled={paymasterTitle === undefined || paymasterTitle === ""}
-            className={`px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold ${
-              paymasterTitle === undefined && "opacity-50"
-            }`}
+            disabled={false}
+            className={`py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold w-[15rem]`}
           >
             {token ? (
-              <div className="flex items-center justify-between py-2 px-5 w-full">
+              <span className="flex items-center justify-between py-2 px-5">
                 {token.image && (
                   <img
                     src={token.image}
                     alt={`${token.symbol} image`}
                     width={32}
                     height={32}
-                    className="mr-[24px]"
                   />
                 )}
-                <span className="w-full text-start">{token.symbol}</span>
-              </div>
+                <span className="text-start">{token.symbol}</span>
+              </span>
             ) : (
-              <span className="mx-auto py-4 px-6">Select Token</span>
+              <span className="flex items-center justify-center text-center mx-auto py-2 px-5">
+                Select Token
+              </span>
             )}
           </GeneralButton>
           <input
@@ -330,9 +176,9 @@ function CreatePaymasters() {
       </div>
       <GeneralButton
         onClick={() => {
-          createTx();
+          createTx(token);
         }}
-        disabled={paymasterTitle === undefined || paymasterTitle === ""}
+        disabled={token === null || price === undefined}
         className={`px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold ${
           price === undefined && "opacity-50"
         }`}

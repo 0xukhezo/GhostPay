@@ -42,8 +42,8 @@ export default function Steps({ steps }: StepsProps) {
                     </span>
                   </span>
                   <span className="ml-4 flex min-w-0 flex-col">
-                    <span className="text-sm font-medium">{step.name}</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-lg font-medium">{step.name}</span>
+                    <span className="text-gray-500 w-3/4">
                       {step.description}
                     </span>
                   </span>
@@ -67,10 +67,10 @@ export default function Steps({ steps }: StepsProps) {
                     </span>
                   </span>
                   <span className="ml-4 flex min-w-0 flex-col">
-                    <span className="text-sm font-medium text-greenMatrix">
+                    <span className="text-lg font-medium text-greenMatrix">
                       {step.name}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-gray-500 w-3/4">
                       {step.description}
                     </span>
                   </span>
@@ -91,10 +91,10 @@ export default function Steps({ steps }: StepsProps) {
                     </span>
                   </span>
                   <span className="ml-4 flex min-w-0 flex-col">
-                    <span className="text-sm font-medium text-gray-500">
+                    <span className="text-lg font-medium text-gray-500">
                       {step.name}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-gray-500 w-3/4">
                       {step.description}
                     </span>
                   </span>
