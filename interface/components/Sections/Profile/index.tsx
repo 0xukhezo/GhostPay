@@ -20,7 +20,7 @@ function ProfileSection() {
   const pathname = usePathname();
 
   const ownedPaymasters = paymasters.filter((paymaster: PaymasterInfo) => {
-    return paymaster.owner.toLowerCase() === smartAccount.toLowerCase();
+    return paymaster.owner.toLowerCase() === smartAccount?.toLowerCase();
   });
 
   return (

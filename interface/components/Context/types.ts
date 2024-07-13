@@ -40,6 +40,7 @@ export type LoginContextType = {
   web3AuthAddress: any;
   provider: any;
   changePaymaster: any;
+  changeToSmartAccount: any;
   paymasterSelected: string | null;
 };
 

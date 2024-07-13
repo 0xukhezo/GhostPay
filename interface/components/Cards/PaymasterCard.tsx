@@ -59,41 +59,53 @@ function PaymasterCard({
       message: "Sending Transaction",
       type: "info",
     });
-    const transaction1 = {
-      to: process.env.NEXT_PUBLIC_ENTRYPOINT,
-      data: entrypointInterface.encodeFunctionData("depositTo", [paymaster.id]),
-      value: amountToFunds,
-    };
 
-    // const transaction2 = {
-    //   to: paymaster.id,
-    //   data: paymasterInterface.encodeFunctionData("addStake", [1]),
-    //   value: amountToFunds,
-    // };
+    try {
+      const transaction1 = {
+        to: process.env.NEXT_PUBLIC_ENTRYPOINT,
+        data: entrypointInterface.encodeFunctionData("depositTo", [
+          paymaster.id,
+        ]),
+        value: amountToFunds,
+      };
 
-    const transactions = [transaction1];
+      // const transaction2 = {
+      //   to: paymaster.id,
+      //   data: paymasterInterface.encodeFunctionData("addStake", [1]),
+      //   value: amountToFunds,
+      // };
 
-    const safeOperation = await safePack.createTransaction({ transactions });
-    const signedSafeOperation = await safePack.signSafeOperation(safeOperation);
-    const userOperationHash = await safePack.executeTransaction({
-      executable: signedSafeOperation,
-    });
+      const transactions = [transaction1];
 
-    let userOperationReceipt = null;
-
-    while (!userOperationReceipt) {
-      // Wait 2 seconds before checking the status again
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      userOperationReceipt = await safePack.getUserOperationReceipt(
-        userOperationHash
+      const safeOperation = await safePack.createTransaction({ transactions });
+      const signedSafeOperation = await safePack.signSafeOperation(
+        safeOperation
       );
+      const userOperationHash = await safePack.executeTransaction({
+        executable: signedSafeOperation,
+      });
 
-      if (userOperationReceipt) {
-        showNotification({
-          message: "Transaction success",
-          type: "success",
-        });
+      let userOperationReceipt = null;
+
+      while (!userOperationReceipt) {
+        // Wait 2 seconds before checking the status again
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        userOperationReceipt = await safePack.getUserOperationReceipt(
+          userOperationHash
+        );
+
+        if (userOperationReceipt) {
+          showNotification({
+            message: "Transaction success",
+            type: "success",
+          });
+        }
       }
+    } catch (error: any) {
+      showNotification({
+        message: "Transaction error",
+        type: "error",
+      });
     }
   };
 
@@ -155,7 +167,7 @@ function PaymasterCard({
         profile && (
           <GeneralButton
             onClick={() => {
-              createDepositTx(ethers.utils.parseEther("0.001").toString());
+              createDepositTx(ethers.utils.parseEther("0.00005").toString());
             }}
             className="px-5 py-2 bg-greenMatrix rounded-xl hover:bg-green-600 text-main font-light font-semibold"
           >

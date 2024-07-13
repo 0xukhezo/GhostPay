@@ -2,7 +2,7 @@ import ETH from "../public/ETH.svg";
 import LINK from "../public/LINK.jpeg";
 
 export const factoryPaymasterContract =
-  "0x4F994c4e18f1cb3088255E784E909d9b834d2CaD";
+  "0x72c62d1FE2BB2E35D7A9743957Db3174bc54Ad49";
 
 export const entrypointBaseContract =
   "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
