@@ -17,9 +17,9 @@ contract Fixture is Test, Utils {
     ERC20Mock public mockERC20;
 
     constructor() {
-        entrypoint = getAddressFromConfigJson(".ENTRYPOINT");
+        /*entrypoint = getAddressFromConfigJson(".ENTRYPOINT");
         selfKisser = getAddressFromConfigJson(".SELF_KISSER");
         factory = new NFCPaymasterFactory(IEntryPoint(entrypoint), 30000, ISelfKisser(selfKisser), 2 * 24 * 60 * 60);
-        mockERC20 = new ERC20Mock();
+        mockERC20 = new ERC20Mock();*/
     }
 }

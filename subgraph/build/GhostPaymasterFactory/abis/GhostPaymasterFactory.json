@@ -3,24 +3,9 @@
     "type": "constructor",
     "inputs": [
       {
-        "name": "_entryPoint",
-        "type": "address",
-        "internalType": "contract IEntryPoint"
-      },
-      {
-        "name": "_refundPostOpCost",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
         "name": "_selfKisser",
         "type": "address",
-        "internalType": "contract ISelfKisser"
-      },
-      {
-        "name": "_stalenessThreshold",
-        "type": "uint32",
-        "internalType": "uint32"
+        "internalType": "address"
       }
     ],
     "stateMutability": "nonpayable"
@@ -32,17 +17,17 @@
       {
         "name": "_token",
         "type": "address",
-        "internalType": "contract IERC20Metadata"
+        "internalType": "address"
       },
       {
         "name": "_tokenOracle",
         "type": "address",
-        "internalType": "contract IChronicle"
+        "internalType": "address"
       },
       {
         "name": "_nativeAssetOracle",
         "type": "address",
-        "internalType": "contract IChronicle"
+        "internalType": "address"
       },
       {
         "name": "_owner",
@@ -60,34 +45,14 @@
         "internalType": "uint32"
       }
     ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "entryPoint",
-    "inputs": [],
     "outputs": [
       {
         "name": "",
         "type": "address",
-        "internalType": "contract IEntryPoint"
+        "internalType": "address"
       }
     ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "refundPostOpCost",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -97,20 +62,7 @@
       {
         "name": "",
         "type": "address",
-        "internalType": "contract ISelfKisser"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "stalenessThreshold",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint32",
-        "internalType": "uint32"
+        "internalType": "address"
       }
     ],
     "stateMutability": "view"

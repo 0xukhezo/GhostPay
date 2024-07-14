@@ -122,24 +122,32 @@ export class GhostPaymaster__validatePaymasterUserOpInputUserOpStruct extends et
     return this[3].toBytes();
   }
 
-  get accountGasLimits(): Bytes {
-    return this[4].toBytes();
+  get callGasLimit(): BigInt {
+    return this[4].toBigInt();
   }
 
-  get preVerificationGas(): BigInt {
+  get verificationGasLimit(): BigInt {
     return this[5].toBigInt();
   }
 
-  get gasFees(): Bytes {
-    return this[6].toBytes();
+  get preVerificationGas(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get maxFeePerGas(): BigInt {
+    return this[7].toBigInt();
+  }
+
+  get maxPriorityFeePerGas(): BigInt {
+    return this[8].toBigInt();
   }
 
   get paymasterAndData(): Bytes {
-    return this[7].toBytes();
+    return this[9].toBytes();
   }
 
   get signature(): Bytes {
-    return this[8].toBytes();
+    return this[10].toBytes();
   }
 }
 
@@ -164,36 +172,6 @@ export class GhostPaymaster extends ethereum.SmartContract {
       "PRICE_DENOMINATOR():(uint256)",
       [],
     );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  entryPoint(): Address {
-    let result = super.call("entryPoint", "entryPoint():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_entryPoint(): ethereum.CallResult<Address> {
-    let result = super.tryCall("entryPoint", "entryPoint():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  getDeposit(): BigInt {
-    let result = super.call("getDeposit", "getDeposit():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_getDeposit(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("getDeposit", "getDeposit():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -292,52 +270,6 @@ export class GhostPaymaster extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  refundPostOpCost(): BigInt {
-    let result = super.call(
-      "refundPostOpCost",
-      "refundPostOpCost():(uint256)",
-      [],
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_refundPostOpCost(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "refundPostOpCost",
-      "refundPostOpCost():(uint256)",
-      [],
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  stalenessThreshold(): BigInt {
-    let result = super.call(
-      "stalenessThreshold",
-      "stalenessThreshold():(uint32)",
-      [],
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_stalenessThreshold(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "stalenessThreshold",
-      "stalenessThreshold():(uint32)",
-      [],
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
   token(): Address {
     let result = super.call("token", "token():(address)", []);
 
@@ -394,7 +326,7 @@ export class GhostPaymaster extends ethereum.SmartContract {
   ): GhostPaymaster__validatePaymasterUserOpResult {
     let result = super.call(
       "validatePaymasterUserOp",
-      "validatePaymasterUserOp((address,uint256,bytes,bytes,bytes32,uint256,bytes32,bytes,bytes),bytes32,uint256):(bytes,uint256)",
+      "validatePaymasterUserOp((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes),bytes32,uint256):(bytes,uint256)",
       [
         ethereum.Value.fromTuple(userOp),
         ethereum.Value.fromFixedBytes(userOpHash),
@@ -415,7 +347,7 @@ export class GhostPaymaster extends ethereum.SmartContract {
   ): ethereum.CallResult<GhostPaymaster__validatePaymasterUserOpResult> {
     let result = super.tryCall(
       "validatePaymasterUserOp",
-      "validatePaymasterUserOp((address,uint256,bytes,bytes,bytes32,uint256,bytes32,bytes,bytes),bytes32,uint256):(bytes,uint256)",
+      "validatePaymasterUserOp((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes),bytes32,uint256):(bytes,uint256)",
       [
         ethereum.Value.fromTuple(userOp),
         ethereum.Value.fromFixedBytes(userOpHash),
@@ -456,40 +388,28 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get _entryPoint(): Address {
+  get _tokenOracle(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get _tokenOracle(): Address {
+  get _nativeAssetOracle(): Address {
     return this._call.inputValues[2].value.toAddress();
   }
 
-  get _nativeAssetOracle(): Address {
+  get _owner(): Address {
     return this._call.inputValues[3].value.toAddress();
   }
 
-  get _stalenessThreshold(): BigInt {
+  get _priceMarkupLimit(): BigInt {
     return this._call.inputValues[4].value.toBigInt();
   }
 
-  get _owner(): Address {
-    return this._call.inputValues[5].value.toAddress();
-  }
-
-  get _priceMarkupLimit(): BigInt {
-    return this._call.inputValues[6].value.toBigInt();
-  }
-
   get _priceMarkup(): BigInt {
-    return this._call.inputValues[7].value.toBigInt();
-  }
-
-  get _refundPostOpCost(): BigInt {
-    return this._call.inputValues[8].value.toBigInt();
+    return this._call.inputValues[5].value.toBigInt();
   }
 
   get _selfKisser(): Address {
-    return this._call.inputValues[9].value.toAddress();
+    return this._call.inputValues[6].value.toAddress();
   }
 }
 
@@ -497,62 +417,6 @@ export class ConstructorCall__Outputs {
   _call: ConstructorCall;
 
   constructor(call: ConstructorCall) {
-    this._call = call;
-  }
-}
-
-export class AddStakeCall extends ethereum.Call {
-  get inputs(): AddStakeCall__Inputs {
-    return new AddStakeCall__Inputs(this);
-  }
-
-  get outputs(): AddStakeCall__Outputs {
-    return new AddStakeCall__Outputs(this);
-  }
-}
-
-export class AddStakeCall__Inputs {
-  _call: AddStakeCall;
-
-  constructor(call: AddStakeCall) {
-    this._call = call;
-  }
-
-  get unstakeDelaySec(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class AddStakeCall__Outputs {
-  _call: AddStakeCall;
-
-  constructor(call: AddStakeCall) {
-    this._call = call;
-  }
-}
-
-export class DepositCall extends ethereum.Call {
-  get inputs(): DepositCall__Inputs {
-    return new DepositCall__Inputs(this);
-  }
-
-  get outputs(): DepositCall__Outputs {
-    return new DepositCall__Outputs(this);
-  }
-}
-
-export class DepositCall__Inputs {
-  _call: DepositCall;
-
-  constructor(call: DepositCall) {
-    this._call = call;
-  }
-}
-
-export class DepositCall__Outputs {
-  _call: DepositCall;
-
-  constructor(call: DepositCall) {
     this._call = call;
   }
 }
@@ -584,10 +448,6 @@ export class PostOpCall__Inputs {
 
   get actualGasCost(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get actualUserOpFeePerGas(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
   }
 }
 
@@ -651,32 +511,6 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class UnlockStakeCall extends ethereum.Call {
-  get inputs(): UnlockStakeCall__Inputs {
-    return new UnlockStakeCall__Inputs(this);
-  }
-
-  get outputs(): UnlockStakeCall__Outputs {
-    return new UnlockStakeCall__Outputs(this);
-  }
-}
-
-export class UnlockStakeCall__Inputs {
-  _call: UnlockStakeCall;
-
-  constructor(call: UnlockStakeCall) {
-    this._call = call;
-  }
-}
-
-export class UnlockStakeCall__Outputs {
-  _call: UnlockStakeCall;
-
-  constructor(call: UnlockStakeCall) {
     this._call = call;
   }
 }
@@ -776,88 +610,32 @@ export class ValidatePaymasterUserOpCallUserOpStruct extends ethereum.Tuple {
     return this[3].toBytes();
   }
 
-  get accountGasLimits(): Bytes {
-    return this[4].toBytes();
+  get callGasLimit(): BigInt {
+    return this[4].toBigInt();
   }
 
-  get preVerificationGas(): BigInt {
+  get verificationGasLimit(): BigInt {
     return this[5].toBigInt();
   }
 
-  get gasFees(): Bytes {
-    return this[6].toBytes();
+  get preVerificationGas(): BigInt {
+    return this[6].toBigInt();
+  }
+
+  get maxFeePerGas(): BigInt {
+    return this[7].toBigInt();
+  }
+
+  get maxPriorityFeePerGas(): BigInt {
+    return this[8].toBigInt();
   }
 
   get paymasterAndData(): Bytes {
-    return this[7].toBytes();
+    return this[9].toBytes();
   }
 
   get signature(): Bytes {
-    return this[8].toBytes();
-  }
-}
-
-export class WithdrawStakeCall extends ethereum.Call {
-  get inputs(): WithdrawStakeCall__Inputs {
-    return new WithdrawStakeCall__Inputs(this);
-  }
-
-  get outputs(): WithdrawStakeCall__Outputs {
-    return new WithdrawStakeCall__Outputs(this);
-  }
-}
-
-export class WithdrawStakeCall__Inputs {
-  _call: WithdrawStakeCall;
-
-  constructor(call: WithdrawStakeCall) {
-    this._call = call;
-  }
-
-  get withdrawAddress(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class WithdrawStakeCall__Outputs {
-  _call: WithdrawStakeCall;
-
-  constructor(call: WithdrawStakeCall) {
-    this._call = call;
-  }
-}
-
-export class WithdrawToCall extends ethereum.Call {
-  get inputs(): WithdrawToCall__Inputs {
-    return new WithdrawToCall__Inputs(this);
-  }
-
-  get outputs(): WithdrawToCall__Outputs {
-    return new WithdrawToCall__Outputs(this);
-  }
-}
-
-export class WithdrawToCall__Inputs {
-  _call: WithdrawToCall;
-
-  constructor(call: WithdrawToCall) {
-    this._call = call;
-  }
-
-  get withdrawAddress(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class WithdrawToCall__Outputs {
-  _call: WithdrawToCall;
-
-  constructor(call: WithdrawToCall) {
-    this._call = call;
+    return this[10].toBytes();
   }
 }
 

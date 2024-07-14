@@ -8,7 +8,7 @@ dataSources:
     name: GhostPaymasterFactory
     network: base-sepolia
     source:
-      address: "0x4F994c4e18f1cb3088255E784E909d9b834d2CaD"
+      address: "0xa499c1F63Ec1D6f72D3DE87c5D020bfF473ca97D"
       abi: GhostPaymasterFactory
       startBlock: 12547947
     mapping:

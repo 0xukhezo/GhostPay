@@ -45,42 +45,55 @@ export class GhostPaymasterFactory extends ethereum.SmartContract {
     return new GhostPaymasterFactory("GhostPaymasterFactory", address);
   }
 
-  entryPoint(): Address {
-    let result = super.call("entryPoint", "entryPoint():(address)", []);
+  deploy(
+    _token: Address,
+    _tokenOracle: Address,
+    _nativeAssetOracle: Address,
+    _owner: Address,
+    _priceMarkupLimit: BigInt,
+    _priceMarkup: BigInt,
+  ): Address {
+    let result = super.call(
+      "deploy",
+      "deploy(address,address,address,address,uint32,uint32):(address)",
+      [
+        ethereum.Value.fromAddress(_token),
+        ethereum.Value.fromAddress(_tokenOracle),
+        ethereum.Value.fromAddress(_nativeAssetOracle),
+        ethereum.Value.fromAddress(_owner),
+        ethereum.Value.fromUnsignedBigInt(_priceMarkupLimit),
+        ethereum.Value.fromUnsignedBigInt(_priceMarkup),
+      ],
+    );
 
     return result[0].toAddress();
   }
 
-  try_entryPoint(): ethereum.CallResult<Address> {
-    let result = super.tryCall("entryPoint", "entryPoint():(address)", []);
+  try_deploy(
+    _token: Address,
+    _tokenOracle: Address,
+    _nativeAssetOracle: Address,
+    _owner: Address,
+    _priceMarkupLimit: BigInt,
+    _priceMarkup: BigInt,
+  ): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "deploy",
+      "deploy(address,address,address,address,uint32,uint32):(address)",
+      [
+        ethereum.Value.fromAddress(_token),
+        ethereum.Value.fromAddress(_tokenOracle),
+        ethereum.Value.fromAddress(_nativeAssetOracle),
+        ethereum.Value.fromAddress(_owner),
+        ethereum.Value.fromUnsignedBigInt(_priceMarkupLimit),
+        ethereum.Value.fromUnsignedBigInt(_priceMarkup),
+      ],
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  refundPostOpCost(): BigInt {
-    let result = super.call(
-      "refundPostOpCost",
-      "refundPostOpCost():(uint256)",
-      [],
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_refundPostOpCost(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "refundPostOpCost",
-      "refundPostOpCost():(uint256)",
-      [],
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   selfKisser(): Address {
@@ -96,29 +109,6 @@ export class GhostPaymasterFactory extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  stalenessThreshold(): BigInt {
-    let result = super.call(
-      "stalenessThreshold",
-      "stalenessThreshold():(uint32)",
-      [],
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_stalenessThreshold(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "stalenessThreshold",
-      "stalenessThreshold():(uint32)",
-      [],
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 
@@ -139,20 +129,8 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _entryPoint(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get _refundPostOpCost(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
   get _selfKisser(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-
-  get _stalenessThreshold(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
+    return this._call.inputValues[0].value.toAddress();
   }
 }
 
@@ -211,5 +189,9 @@ export class DeployCall__Outputs {
 
   constructor(call: DeployCall) {
     this._call = call;
+  }
+
+  get value0(): Address {
+    return this._call.outputValues[0].value.toAddress();
   }
 }

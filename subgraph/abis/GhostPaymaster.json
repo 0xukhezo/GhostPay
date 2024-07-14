@@ -5,27 +5,17 @@
             {
                 "name": "_token",
                 "type": "address",
-                "internalType": "contract IERC20Metadata"
-            },
-            {
-                "name": "_entryPoint",
-                "type": "address",
-                "internalType": "contract IEntryPoint"
+                "internalType": "address"
             },
             {
                 "name": "_tokenOracle",
                 "type": "address",
-                "internalType": "contract IChronicle"
+                "internalType": "address"
             },
             {
                 "name": "_nativeAssetOracle",
                 "type": "address",
-                "internalType": "contract IChronicle"
-            },
-            {
-                "name": "_stalenessThreshold",
-                "type": "uint32",
-                "internalType": "uint32"
+                "internalType": "address"
             },
             {
                 "name": "_owner",
@@ -43,14 +33,9 @@
                 "internalType": "uint32"
             },
             {
-                "name": "_refundPostOpCost",
-                "type": "uint256",
-                "internalType": "uint256"
-            },
-            {
                 "name": "_selfKisser",
                 "type": "address",
-                "internalType": "contract ISelfKisser"
+                "internalType": "address"
             }
         ],
         "stateMutability": "nonpayable"
@@ -58,52 +43,6 @@
     {
         "type": "function",
         "name": "PRICE_DENOMINATOR",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "addStake",
-        "inputs": [
-            {
-                "name": "unstakeDelaySec",
-                "type": "uint32",
-                "internalType": "uint32"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "payable"
-    },
-    {
-        "type": "function",
-        "name": "deposit",
-        "inputs": [],
-        "outputs": [],
-        "stateMutability": "payable"
-    },
-    {
-        "type": "function",
-        "name": "entryPoint",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "contract IEntryPoint"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getDeposit",
         "inputs": [],
         "outputs": [
             {
@@ -171,11 +110,6 @@
                 "name": "actualGasCost",
                 "type": "uint256",
                 "internalType": "uint256"
-            },
-            {
-                "name": "actualUserOpFeePerGas",
-                "type": "uint256",
-                "internalType": "uint256"
             }
         ],
         "outputs": [],
@@ -209,36 +143,10 @@
     },
     {
         "type": "function",
-        "name": "refundPostOpCost",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
         "name": "renounceOwnership",
         "inputs": [],
         "outputs": [],
         "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "stalenessThreshold",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint32",
-                "internalType": "uint32"
-            }
-        ],
-        "stateMutability": "view"
     },
     {
         "type": "function",
@@ -294,13 +202,6 @@
     },
     {
         "type": "function",
-        "name": "unlockStake",
-        "inputs": [],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
         "name": "updateMarkup",
         "inputs": [
             {
@@ -319,7 +220,7 @@
             {
                 "name": "userOp",
                 "type": "tuple",
-                "internalType": "struct PackedUserOperation",
+                "internalType": "struct UserOperation",
                 "components": [
                     {
                         "name": "sender",
@@ -342,9 +243,14 @@
                         "internalType": "bytes"
                     },
                     {
-                        "name": "accountGasLimits",
-                        "type": "bytes32",
-                        "internalType": "bytes32"
+                        "name": "callGasLimit",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "verificationGasLimit",
+                        "type": "uint256",
+                        "internalType": "uint256"
                     },
                     {
                         "name": "preVerificationGas",
@@ -352,9 +258,14 @@
                         "internalType": "uint256"
                     },
                     {
-                        "name": "gasFees",
-                        "type": "bytes32",
-                        "internalType": "bytes32"
+                        "name": "maxFeePerGas",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "maxPriorityFeePerGas",
+                        "type": "uint256",
+                        "internalType": "uint256"
                     },
                     {
                         "name": "paymasterAndData",
@@ -391,37 +302,6 @@
                 "internalType": "uint256"
             }
         ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "withdrawStake",
-        "inputs": [
-            {
-                "name": "withdrawAddress",
-                "type": "address",
-                "internalType": "address payable"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "withdrawTo",
-        "inputs": [
-            {
-                "name": "withdrawAddress",
-                "type": "address",
-                "internalType": "address payable"
-            },
-            {
-                "name": "amount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [],
         "stateMutability": "nonpayable"
     },
     {
@@ -512,11 +392,6 @@
     },
     {
         "type": "error",
-        "name": "OraclePriceStale",
-        "inputs": []
-    },
-    {
-        "type": "error",
         "name": "OwnableInvalidOwner",
         "inputs": [
             {
@@ -536,15 +411,5 @@
                 "internalType": "address"
             }
         ]
-    },
-    {
-        "type": "error",
-        "name": "PriceMarkupTooHigh",
-        "inputs": []
-    },
-    {
-        "type": "error",
-        "name": "PriceMarkupTooLow",
-        "inputs": []
     }
 ]

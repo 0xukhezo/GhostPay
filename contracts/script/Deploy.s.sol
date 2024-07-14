@@ -7,7 +7,6 @@ import {IEntryPoint} from "src/interfaces/IEntryPoint.sol";
 import {ISelfKisser} from "src/interfaces/ISelfKisser.sol";
 
 
-
 contract GhostPayScript is Utils {
     address public entrypoint;
     address public selfKisser;
@@ -20,7 +19,7 @@ contract GhostPayScript is Utils {
     function run() public {
         vm.startBroadcast();
 
-        NFCPaymasterFactory factory = new NFCPaymasterFactory(IEntryPoint(entrypoint), 30000, ISelfKisser(selfKisser), 2 * 24 * 60 * 60);
+        NFCPaymasterFactory factory = new NFCPaymasterFactory(selfKisser);
 
         string memory configPath = getJsonConfigPath();
         vm.writeJson(vm.toString(address(factory)), configPath, ".FACTORY");
