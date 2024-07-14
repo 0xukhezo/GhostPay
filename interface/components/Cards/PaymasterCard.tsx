@@ -30,7 +30,7 @@ function PaymasterCard({
   profile,
 }: PaymasterCardProps) {
   const { favoritesPaymasters, setFavoritesPaymasters } = useGeneral();
-  const { changePaymaster, safePack, smartAccount } = useLogin();
+  const { changePaymaster, smartAccount } = useLogin();
   const { showNotification } = useNotification();
   const { setIsModalOpen, setContent, setTitle } = useModal();
 
@@ -79,6 +79,7 @@ function PaymasterCard({
             alt={`${token[0].symbol} image`}
             width={32}
             height={32}
+            className="rounded-full"
           />
         )}
       </span>

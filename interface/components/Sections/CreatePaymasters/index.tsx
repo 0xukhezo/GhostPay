@@ -169,6 +169,7 @@ function CreatePaymasters() {
                     alt={`${token.symbol} image`}
                     width={32}
                     height={32}
+                    className="rounded-full"
                   />
                 )}
                 <span className="text-start">{token.symbol}</span>
