@@ -51,7 +51,7 @@ export const generalTokens = [
     image: APE.src,
     name: "Ape Coin",
     symbol: "APE",
-    contract: "0xd150aa5F4a71d72208276779f6cDD90F77E46dB4", // delete
+    contract: "0xd150aa5F4a71d72208276779f6cDD90F77E46dB4",
     oracle: "0x8E947Ea7D5881Cd600Ace95F1201825F8C708844",
     decimals: 18,
   },
@@ -59,7 +59,7 @@ export const generalTokens = [
     image: LINK.src,
     name: "Link Token",
     symbol: "LINK",
-    contract: "0xd150aa5F4a71d72208276779f6cDD90F77E46dB4", // delete
+    contract: "0xd150aa5F4a71d72208276779f6cDD90F77E46dB4",
     oracle: "0x8E947Ea7D5881Cd600Ace95F1201825F8C708844",
     decimals: 18,
   },
@@ -78,7 +78,7 @@ export const BaseTokens = [
     image: APE.src,
     name: "Ape Coin",
     symbol: "APE",
-    contract: "", // delete
+    contract: "",
     oracle: "",
     decimals: 18,
   },
@@ -86,7 +86,7 @@ export const BaseTokens = [
     image: LINK.src,
     name: "Link Token",
     symbol: "LINK",
-    contract: "", // delete
+    contract: "",
     oracle: "",
     decimals: 18,
   },
@@ -105,7 +105,7 @@ export const ArbitrumTokens = [
     image: APE.src,
     name: "Ape Coin",
     symbol: "APE",
-    contract: "", // delete
+    contract: "",
     oracle: "",
     decimals: 18,
   },
@@ -113,7 +113,7 @@ export const ArbitrumTokens = [
     image: LINK.src,
     name: "Link Token",
     symbol: "LINK",
-    contract: "", // delete
+    contract: "",
     oracle: "",
     decimals: 18,
   },
