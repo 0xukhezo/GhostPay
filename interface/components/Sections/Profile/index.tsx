@@ -48,9 +48,23 @@ function ProfileSection() {
       {smartAccount &&
         smartAccount.toLowerCase() === pathname.split("/")[2].toLowerCase() && (
           <>
-            <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl mt-10 border-b-1 border-greenMatrix w-full">
+            <h2 className="w-fit flex justify-between text-base text-start text-base md:text-2xl mt-10 mb-6 w-full">
               Your Paymasters
             </h2>
+            <div className="grid grid-cols-9 pb-1 border-b-1 border-greenMatrix px-10">
+              <span className="text-base md:text-xl flex justify-center col-span-2">
+                Name
+              </span>
+              <span className="text-base md:text-xl flex justify-center col-span-2">
+                Token
+              </span>
+              <span className="text-base md:text-xl flex justify-center col-span-2">
+                Fee
+              </span>
+              <span className="text-base md:text-xl flex justify-center col-span-2">
+                Owner
+              </span>{" "}
+            </div>
             {ownedPaymasters.length !== 0 ? (
               <div className="mt-4">
                 {ownedPaymasters.map((paymaster: any, index: number) => {
@@ -60,6 +74,7 @@ function ProfileSection() {
                       index={index}
                       paymaster={paymaster}
                       profile={true}
+                      allowFavorites={false}
                     />
                   );
                 })}

@@ -32,7 +32,6 @@ function TransferSection() {
     }
 
     try {
-      console.log("pepe");
       const provider1 = new ethers.providers.JsonRpcProvider(
         "https://docs.safe.global/home/4337-supported-networks"
       );
@@ -123,6 +122,7 @@ function TransferSection() {
                   alt={`${token.symbol} image`}
                   width={32}
                   height={32}
+                  className="rounded-full"
                 />
               )}
               <span className="text-start">{token.symbol}</span>

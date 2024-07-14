@@ -14,6 +14,7 @@ export const useFetchPaymaster = () => {
                 token
                 price
                 owner
+                executedUo
             }
         }`;
 

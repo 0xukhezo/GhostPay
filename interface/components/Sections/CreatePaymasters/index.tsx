@@ -99,13 +99,13 @@ function CreatePaymasters() {
         {
           name: "Select Token",
           description:
-            "Your paymaster will receive this token for pay gas fees.",
+            "Your paymaster will receive this token for pay the rest of users gas fees.",
           status: "complete",
         },
         {
           name: "Select Fee",
           description:
-            "This is the price of the selected token you are going to receive per gwei.",
+            "This is the fee of the selected token you are going to receive extra the current price of the native token.",
           status: "current",
         },
       ]);
@@ -117,13 +117,13 @@ function CreatePaymasters() {
         {
           name: "Select Token",
           description:
-            "Your paymaster will receive this token for pay gas fees.",
+            "Your paymaster will receive this token for pay the rest of users gas fees.",
           status: "complete",
         },
         {
           name: "Select Fee",
           description:
-            "This is the price of the selected token you are going to receive per gwei.",
+            "This is the fee of the selected token you are going to receive extra the current price of the native token.",
           status: "complete",
         },
       ]);

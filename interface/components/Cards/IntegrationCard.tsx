@@ -13,12 +13,12 @@ function IntegrationCard({ integration }: IntegrationCardProps) {
   return (
     <main className="max-h-[375px] flex flex-col justify-center cursor-pointer py-8 text-lg text-center bg-secondary cardStakingHover lg:mb-[37px] md:mb-[20px] mb-[10px] rounded-2xl min-w-[297px] pb-[23px] mx-auto rounded-lg  border border-solid hover:border-greenMatrix border-transparent hover:transition-all hover:duration-1000 ">
       <Image
-        width={108}
-        height={108}
+        width={80}
+        height={80}
         alt="Token Image"
         src={integration.image}
         className={`mx-auto ${
-          integration.name !== "Swap" ? "rounded-full mb-8" : "mb-4"
+          integration.name !== "Transfer" ? "rounded-full mb-8" : "mb-4"
         } `}
       />
       <div className="mt-3 mb-2">{integration.name}</div>

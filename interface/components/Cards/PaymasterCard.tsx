@@ -89,12 +89,9 @@ function PaymasterCard({
           <span>{Number(paymaster.price) / 10 ** 4 - 100} %</span>
         )}
       </span>
-      <Link
-        href={`/profile/${paymaster.owner}`}
-        className="flex justify-center hover:text-greenMatrix col-span-2"
-      >
+      <span className="flex justify-center col-span-2">
         {abbreviateEthereumAddress(paymaster.owner)}
-      </Link>
+      </span>
       {!profile && (
         <GeneralButton
           onClick={async () => {

@@ -48,7 +48,6 @@ const HomePage: React.FC = () => {
           const data = await response.json();
           clearInterval(interval);
           setIsModalOpen(false);
-
           login(data?.jwtGenerated);
         }
       } catch (error) {

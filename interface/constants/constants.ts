@@ -3,7 +3,7 @@ import APE from "../public/apeCoin.png";
 import LINK from "../public/LINK.jpeg";
 
 export const factoryPaymasterContract =
-  "0x3D34BaF24cDE14791eFfe59D8e40D31CaF7614d8";
+  "0xa499c1F63Ec1D6f72D3DE87c5D020bfF473ca97D";
 
 export const entrypointBaseContract =
   "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
@@ -25,7 +25,7 @@ export const initialSteps = [
 
 export const integrations = [
   {
-    name: "Swap",
+    name: "Transfer",
     image: "/cara.svg",
   },
   {
@@ -51,16 +51,16 @@ export const generalTokens = [
     image: APE.src,
     name: "Ape Coin",
     symbol: "APE",
-    contract: "0xCD85B9a767eF2277E264A4B9A14a2deACAB82FfB", // delete
-    oracle: "",
+    contract: "0xd150aa5F4a71d72208276779f6cDD90F77E46dB4", // delete
+    oracle: "0x8E947Ea7D5881Cd600Ace95F1201825F8C708844",
     decimals: 18,
   },
   {
     image: LINK.src,
     name: "Link Token",
     symbol: "LINK",
-    contract: "0xCD85B9a767eF2277E264A4B9A14a2deACAB82FfB", // delete
-    oracle: "",
+    contract: "0xd150aa5F4a71d72208276779f6cDD90F77E46dB4", // delete
+    oracle: "0x8E947Ea7D5881Cd600Ace95F1201825F8C708844",
     decimals: 18,
   },
 ];
@@ -123,7 +123,7 @@ export const generalConstants = [
   {
     base: [
       {
-        factoryPaymasterContract: "0x3D34BaF24cDE14791eFfe59D8e40D31CaF7614d8",
+        factoryPaymasterContract: "0xa499c1F63Ec1D6f72D3DE87c5D020bfF473ca97D",
         entrypointContract: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
         generalTokens: BaseTokens,
         chainId: "0x14a34",

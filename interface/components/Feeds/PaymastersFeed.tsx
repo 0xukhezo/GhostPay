@@ -9,7 +9,7 @@ import { PaymasterInfo } from "../../config/types";
 
 function PaymastersFeed() {
   const { paymasters, loading } = useFetchPaymaster();
-
+  console.log(paymasters);
   return (
     <main className="p-10">
       <div className="grid grid-cols-10 pb-1 border-b-1 border-greenMatrix px-10">
@@ -26,7 +26,6 @@ function PaymastersFeed() {
         <span className="text-base md:text-xl flex justify-center col-span-2">
           Owner
         </span>{" "}
-        <span></span>
       </div>
       <div className="mt-4">
         {!loading ? (

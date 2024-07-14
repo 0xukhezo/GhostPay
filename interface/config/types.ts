@@ -18,4 +18,5 @@ export type PaymasterInfo = {
   token: string;
   price: string;
   owner: string;
+  executedUo: string;
 };
