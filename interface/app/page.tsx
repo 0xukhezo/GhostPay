@@ -76,12 +76,12 @@ const HomePage: React.FC = () => {
           <div className="login flex flex-col justify-center items-center w-full">
             <div className="text-center flex flex-col justify-center">
               <div className="font-black text-5xl tracking-widest mx-auto">
-                Keep your money private
+                Paymasters accessible to anyone
               </div>
               {!transition ? (
                 <>
                   <div className="my-[24px] max-w-[397px] text-center mx-auto text-xl">
-                    Allow users to use a payer in their smart wallets
+                    We built No-code tool to create custom Paymasters
                   </div>
                   <button
                     onClick={generateQrCode}
